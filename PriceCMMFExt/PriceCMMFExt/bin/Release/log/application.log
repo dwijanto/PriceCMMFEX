@@ -1,0 +1,12 @@
+2013-09-09 03:42:31.335 PM	****** Start Logging ******
+2013-09-09 03:42:31.351 PM	doWork	--------Start----------
+2013-09-09 03:42:31.351 PM	doWork	Send email to Validator
+2013-09-09 03:42:38.050 PM	doWork	Create SAP File
+2013-09-09 03:42:38.129 PM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-09 03:42:41.221 PM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2013-09-09 03:42:41.221 PM	doWork	Send Email to CC For status Completed
+2013-09-09 03:42:41.236 PM	doWork	--------End------------
+2014-10-21 09:59:05.243 AM	doWork	--------Start----------
+2014-10-21 09:59:05.261 AM	doWork	Send Auto PriceChange Summary
+2014-10-21 09:59:05.262 AM	doWork	Send email to Assigned User
+2014-10-21 09:59:05.632 AM	doWork	--------End------------

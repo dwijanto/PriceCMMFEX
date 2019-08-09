@@ -1,0 +1,566 @@
+2013-09-03 02:34:11.905 PM	****** Start Logging ******
+2013-09-03 02:34:18.575 PM	doWork	--------Start----------
+2013-09-03 02:34:27.151 PM	doWork	--------End------------
+2013-09-03 02:38:38.179 PM	doWork	--------Start----------
+2013-09-03 02:38:39.194 PM	doWork	--------End------------
+2013-09-03 02:38:49.270 PM	doWork	--------Start----------
+2013-09-03 02:38:50.285 PM	doWork	--------End------------
+2013-09-03 02:40:37.821 PM	doWork	--------Start----------
+2013-09-03 02:40:38.836 PM	doWork	--------End------------
+2013-09-03 02:41:10.438 PM	doWork	--------Start----------
+2013-09-03 02:41:11.453 PM	doWork	--------End------------
+2013-09-03 03:06:50.938 PM	doWork	--------Start----------
+2013-09-03 03:06:50.954 PM	doWork	--------End------------
+2013-09-03 03:40:54.461 PM	doWork	--------Start----------
+2013-09-03 03:55:58.946 PM	doWork	--------Start----------
+2013-09-03 03:56:34.567 PM	doWork	--------Start----------
+2013-09-03 03:57:48.286 PM	doWork	--------Start----------
+2013-09-03 03:59:02.968 PM	doWork	--------Start----------
+2013-09-03 04:03:27.435 PM	doWork	--------Start----------
+2013-09-03 04:04:13.996 PM	doWork	ERROR: 42P01: relation "pricechangdtl" does not exist select * from pricechangehd;select * from pricechangdtl;
+2013-09-03 04:04:13.996 PM	doWork	--------End------------
+2013-09-03 04:05:01.743 PM	doWork	--------Start----------
+2013-09-03 04:05:14.277 PM	doWork	--------Start----------
+2013-09-03 04:06:35.458 PM	doWork	
+2013-09-03 04:06:35.458 PM	doWork	--------End------------
+2013-09-03 04:09:20.419 PM	doWork	--------Start----------
+2013-09-03 04:34:04.901 PM	doWork	--------Start----------
+2013-09-03 04:35:10.501 PM	doWork	--------Start----------
+2013-09-03 04:38:10.635 PM	doWork	--------Start----------
+2013-09-03 04:39:52.269 PM	doWork	--------End------------
+2013-09-03 04:41:52.152 PM	doWork	--------Start----------
+2013-09-03 04:42:25.605 PM	doWork	--------End------------
+2013-09-03 04:43:20.420 PM	doWork	--------Start----------
+2013-09-03 04:48:39.252 PM	doWork	--------End------------
+2013-09-03 04:58:53.282 PM	doWork	--------Start----------
+2013-09-03 05:16:14.519 PM	doWork	--------Start----------
+2013-09-03 05:21:09.267 PM	doWork	--------End------------
+2013-09-03 05:26:02.102 PM	doWork	--------Start----------
+2013-09-03 05:31:55.597 PM	doWork	--------Start----------
+2013-09-03 05:36:50.566 PM	doWork	--------End------------
+2013-09-04 09:48:30.325 AM	doWork	--------Start----------
+2013-09-04 09:53:12.227 AM	doWork	--------Start----------
+2013-09-04 09:55:24.504 AM	doWork	--------Start----------
+2013-09-04 09:59:49.245 AM	doWork	--------End------------
+2013-09-04 10:07:02.428 AM	doWork	--------Start----------
+2013-09-04 10:17:39.752 AM	doWork	--------End------------
+2013-09-04 10:17:53.683 AM	doWork	--------Start----------
+2013-09-04 10:18:22.981 AM	doWork	--------Start----------
+2013-09-04 10:22:56.098 AM	doWork	--------End------------
+2013-09-04 10:49:48.659 AM	doWork	--------Start----------
+2013-09-05 03:05:33.740 PM	doWork	--------Start----------
+2013-09-05 03:09:39.767 PM	doWork	--------Start----------
+2013-09-05 03:16:50.494 PM	doWork	--------Start----------
+2013-09-05 03:18:18.347 PM	doWork	--------Start----------
+2013-09-05 03:22:22.757 PM	doWork	--------End------------
+2013-09-05 03:43:44.859 PM	doWork	--------Start----------
+2013-09-05 03:48:57.702 PM	doWork	--------End------------
+2013-09-06 08:43:40.414 AM	doWork	--------Start----------
+2013-09-06 09:19:22.065 AM	doWork	--------Start----------
+2013-09-06 09:19:22.081 AM	doWork	Send email to Validator
+2013-09-06 09:25:04.730 AM	doWork	Create SAP File
+2013-09-06 09:25:12.010 AM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-06 09:25:12.010 AM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2013-09-06 09:29:27.386 AM	doWork	--------Start----------
+2013-09-06 09:29:27.401 AM	doWork	Send email to Validator
+2013-09-06 09:29:48.101 AM	doWork	Create SAP File
+2013-09-06 09:29:48.101 AM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-06 09:29:48.101 AM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2013-09-06 09:33:00.363 AM	doWork	--------Start----------
+2013-09-06 09:33:00.379 AM	doWork	Send email to Validator
+2013-09-06 09:33:03.453 AM	doWork	Create SAP File
+2013-09-06 09:33:03.453 AM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-06 09:33:03.453 AM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2013-09-06 09:36:31.983 AM	doWork	--------Start----------
+2013-09-06 09:36:31.998 AM	doWork	Send email to Validator
+2013-09-06 09:36:35.106 AM	doWork	Create SAP File
+2013-09-06 09:36:35.106 AM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-06 09:36:35.106 AM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2013-09-06 09:38:17.934 AM	doWork	Send Email to CC For status Completed
+2013-09-06 09:39:10.558 AM	doWork	--------End------------
+2013-09-06 10:16:42.581 AM	doWork	--------Start----------
+2013-09-06 10:16:42.596 AM	doWork	Send email to Validator
+2013-09-06 10:16:45.500 AM	doWork	Create SAP File
+2013-09-06 10:16:45.500 AM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-06 10:16:45.500 AM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2013-09-06 10:20:10.979 AM	Execute	ERROR: 42804: column "sendstdvalidatedtocreator" is of type boolean but expression is of type bigint
+2013-09-06 10:21:48.294 AM	doWork	Send Email to CC For status Completed
+2013-09-06 10:22:46.666 AM	doWork	--------End------------
+2013-09-06 10:25:16.764 AM	doWork	--------Start----------
+2013-09-06 10:25:16.779 AM	doWork	Send email to Validator
+2013-09-06 10:25:19.840 AM	doWork	Create SAP File
+2013-09-06 10:25:19.840 AM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-06 10:25:19.840 AM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2013-09-06 10:25:28.991 AM	doWork	Send Email to CC For status Completed
+2013-09-06 10:25:33.707 AM	doWork	--------End------------
+2013-09-06 10:25:59.926 AM	doWork	--------Start----------
+2013-09-06 10:25:59.941 AM	doWork	Send email to Validator
+2013-09-06 10:26:05.594 AM	doWork	Create SAP File
+2013-09-06 10:26:05.594 AM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-06 10:26:05.594 AM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2013-09-06 10:26:23.162 AM	doWork	Send Email to CC For status Completed
+2013-09-06 10:26:28.627 AM	doWork	--------End------------
+2013-09-06 10:28:39.927 AM	doWork	--------Start----------
+2013-09-06 10:28:39.943 AM	doWork	Send email to Validator
+2013-09-06 10:28:42.785 AM	doWork	Create SAP File
+2013-09-06 10:28:42.785 AM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-06 10:28:42.785 AM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2013-09-06 10:33:26.548 AM	doWork	Send Email to CC For status Completed
+2013-09-06 10:33:26.563 AM	doWork	--------End------------
+2013-09-06 10:33:42.617 AM	doWork	--------Start----------
+2013-09-06 10:33:42.633 AM	doWork	Send email to Validator
+2013-09-06 10:33:45.475 AM	doWork	Create SAP File
+2013-09-06 10:33:45.475 AM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-06 10:33:45.475 AM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2013-09-06 10:35:35.554 AM	doWork	Send Email to CC For status Completed
+2013-09-06 10:35:43.753 AM	doWork	--------End------------
+2013-09-06 10:35:55.683 AM	doWork	--------Start----------
+2013-09-06 10:35:55.715 AM	doWork	Send email to Validator
+2013-09-06 10:35:58.729 AM	doWork	Create SAP File
+2013-09-06 10:35:58.729 AM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-06 10:35:58.729 AM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2013-09-06 10:39:25.520 AM	doWork	Send Email to CC For status Completed
+2013-09-06 10:39:25.567 AM	doWork	--------End------------
+2013-09-06 10:42:17.191 AM	doWork	--------Start----------
+2013-09-06 10:42:17.207 AM	doWork	Send email to Validator
+2013-09-06 10:42:17.207 AM	doWork	Create SAP File
+2013-09-06 10:42:17.207 AM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-06 10:42:17.207 AM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2013-09-06 10:51:35.930 AM	doWork	--------Start----------
+2013-09-06 10:51:35.946 AM	doWork	Send email to Validator
+2013-09-06 10:51:35.946 AM	doWork	Create SAP File
+2013-09-06 10:51:35.946 AM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-06 10:51:35.946 AM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2013-09-06 10:53:50.122 AM	doWork	--------Start----------
+2013-09-06 10:53:50.138 AM	doWork	Send email to Validator
+2013-09-06 10:53:50.138 AM	doWork	Create SAP File
+2013-09-06 10:53:50.138 AM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-06 10:53:50.138 AM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2013-09-06 10:54:21.995 AM	doWork	Send Email to CC For status Completed
+2013-09-06 10:54:21.995 AM	doWork	--------End------------
+2013-09-06 10:55:19.495 AM	doWork	--------Start----------
+2013-09-06 10:55:19.510 AM	doWork	Send email to Validator
+2013-09-06 10:55:19.510 AM	doWork	Create SAP File
+2013-09-06 10:55:19.510 AM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-06 10:55:19.510 AM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2013-09-06 10:55:55.615 AM	doWork	--------Start----------
+2013-09-06 10:55:55.631 AM	doWork	Send email to Validator
+2013-09-06 10:55:55.631 AM	doWork	Create SAP File
+2013-09-06 10:55:55.631 AM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-06 10:55:55.631 AM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2013-09-06 10:58:55.485 AM	doWork	Send Email to CC For status Completed
+2013-09-06 11:00:24.249 AM	doWork	--------End------------
+2013-09-06 11:03:44.607 AM	doWork	--------Start----------
+2013-09-06 11:03:44.638 AM	doWork	Send email to Validator
+2013-09-06 11:03:44.638 AM	doWork	Create SAP File
+2013-09-06 11:03:44.638 AM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-06 11:03:44.638 AM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2013-09-06 11:03:44.638 AM	doWork	Send Email to CC For status Completed
+2013-09-06 11:14:37.138 AM	doWork	--------End------------
+2013-09-06 11:17:14.598 AM	doWork	--------Start----------
+2013-09-06 11:17:14.614 AM	doWork	Send email to Validator
+2013-09-06 11:17:14.614 AM	doWork	Create SAP File
+2013-09-06 11:17:14.614 AM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-06 11:17:14.614 AM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2013-09-06 11:17:14.614 AM	doWork	Send Email to CC For status Completed
+2013-09-06 11:19:22.091 AM	doWork	--------End------------
+2013-09-06 11:20:09.721 AM	doWork	--------Start----------
+2013-09-06 11:20:09.752 AM	doWork	Send email to Validator
+2013-09-06 11:20:09.752 AM	doWork	Create SAP File
+2013-09-06 11:20:09.752 AM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-06 11:20:09.752 AM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2013-09-06 11:20:34.160 AM	doWork	Send Email to CC For status Completed
+2013-09-06 11:20:50.042 AM	doWork	--------End------------
+2013-09-06 11:21:10.921 AM	doWork	--------Start----------
+2013-09-06 11:21:10.937 AM	doWork	Send email to Validator
+2013-09-06 11:21:10.937 AM	doWork	Create SAP File
+2013-09-06 11:21:10.937 AM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-06 11:21:10.937 AM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2013-09-06 11:23:36.622 AM	doWork	Send Email to CC For status Completed
+2013-09-06 11:23:36.638 AM	doWork	--------End------------
+2013-09-06 11:25:02.684 AM	doWork	--------Start----------
+2013-09-06 11:25:02.700 AM	doWork	Send email to Validator
+2013-09-06 11:25:02.700 AM	doWork	Create SAP File
+2013-09-06 11:25:02.700 AM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-06 11:25:02.700 AM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2013-09-06 11:28:18.358 AM	doWork	Send Email to CC For status Completed
+2013-09-06 11:28:18.374 AM	doWork	--------End------------
+2013-09-06 11:28:52.870 AM	doWork	--------Start----------
+2013-09-06 11:28:52.886 AM	doWork	Send email to Validator
+2013-09-06 11:28:52.886 AM	doWork	Create SAP File
+2013-09-06 11:28:52.886 AM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-06 11:28:52.886 AM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2013-09-06 11:29:14.624 AM	doWork	Send Email to CC For status Completed
+2013-09-06 11:29:17.076 AM	doWork	--------End------------
+2013-09-06 11:30:50.956 AM	doWork	--------Start----------
+2013-09-06 11:30:50.970 AM	doWork	Send email to Validator
+2013-09-06 11:30:50.970 AM	doWork	Create SAP File
+2013-09-06 11:30:50.970 AM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-06 11:30:50.970 AM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2013-09-06 11:30:51.290 AM	doWork	Send Email to CC For status Completed
+2013-09-06 11:30:51.304 AM	doWork	--------End------------
+2013-09-06 11:32:20.004 AM	doWork	--------Start----------
+2013-09-06 11:32:20.019 AM	doWork	Send email to Validator
+2013-09-06 11:32:22.732 AM	doWork	Create SAP File
+2013-09-06 11:32:22.732 AM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-06 11:32:22.732 AM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2013-09-06 11:32:25.227 AM	doWork	Send Email to CC For status Completed
+2013-09-06 11:32:27.650 AM	doWork	--------End------------
+2013-09-06 02:52:18.689 PM	doWork	--------Start----------
+2013-09-06 02:52:18.749 PM	doWork	Send email to Validator
+2013-09-06 02:52:18.749 PM	doWork	Create SAP File
+2013-09-06 02:54:19.183 PM	doWork	--------Start----------
+2013-09-06 02:54:19.198 PM	doWork	Send email to Validator
+2013-09-06 02:54:19.198 PM	doWork	Create SAP File
+2013-09-06 02:59:52.109 PM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-06 02:59:52.109 PM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2013-09-06 02:59:52.109 PM	doWork	Send Email to CC For status Completed
+2013-09-06 02:59:52.109 PM	doWork	--------End------------
+2013-09-06 03:27:17.442 PM	doWork	--------Start----------
+2013-09-06 03:27:17.458 PM	doWork	Send email to Validator
+2013-09-06 03:27:17.458 PM	doWork	Create SAP File
+2013-09-06 03:29:09.537 PM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-06 03:29:09.537 PM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2013-09-06 03:29:09.537 PM	doWork	Send Email to CC For status Completed
+2013-09-06 03:29:09.537 PM	doWork	--------End------------
+2013-09-06 03:30:52.567 PM	doWork	--------Start----------
+2013-09-06 03:30:52.583 PM	doWork	Send email to Validator
+2013-09-06 03:30:52.583 PM	doWork	Create SAP File
+2013-09-06 03:31:33.604 PM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-06 03:31:33.604 PM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2013-09-06 03:31:33.604 PM	doWork	Send Email to CC For status Completed
+2013-09-06 03:31:33.604 PM	doWork	--------End------------
+2013-09-06 03:32:01.977 PM	doWork	--------Start----------
+2013-09-06 03:32:01.993 PM	doWork	Send email to Validator
+2013-09-06 03:32:01.993 PM	doWork	Create SAP File
+2013-09-06 03:32:05.584 PM	doWork	
+2013-09-06 03:32:05.584 PM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-06 03:32:05.584 PM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2013-09-06 03:32:05.584 PM	doWork	Send Email to CC For status Completed
+2013-09-06 03:32:05.584 PM	doWork	--------End------------
+2013-09-06 03:32:13.907 PM	doWork	--------Start----------
+2013-09-06 03:32:13.923 PM	doWork	Send email to Validator
+2013-09-06 03:32:13.923 PM	doWork	Create SAP File
+2013-09-06 03:32:32.020 PM	doWork	
+2013-09-06 03:32:32.020 PM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-06 03:32:32.020 PM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2013-09-06 03:32:32.020 PM	doWork	Send Email to CC For status Completed
+2013-09-06 03:32:32.020 PM	doWork	--------End------------
+2013-09-06 03:32:51.948 PM	doWork	--------Start----------
+2013-09-06 03:32:51.963 PM	doWork	Send email to Validator
+2013-09-06 03:32:51.963 PM	doWork	Create SAP File
+2013-09-06 03:32:52.338 PM	doWork	
+2013-09-06 03:32:52.338 PM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-06 03:32:52.338 PM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2013-09-06 03:32:52.338 PM	doWork	Send Email to CC For status Completed
+2013-09-06 03:32:52.338 PM	doWork	--------End------------
+2013-09-06 03:33:33.535 PM	doWork	--------Start----------
+2013-09-06 03:33:33.566 PM	doWork	Send email to Validator
+2013-09-06 03:33:33.566 PM	doWork	Create SAP File
+2013-09-06 03:33:34.003 PM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-06 03:33:34.003 PM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2013-09-06 03:33:34.003 PM	doWork	Send Email to CC For status Completed
+2013-09-06 03:33:34.003 PM	doWork	--------End------------
+2013-09-06 03:33:47.096 PM	doWork	--------Start----------
+2013-09-06 03:33:47.112 PM	doWork	Send email to Validator
+2013-09-06 03:33:47.112 PM	doWork	Create SAP File
+2013-09-06 03:33:47.455 PM	doWork	
+2013-09-06 03:33:47.455 PM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-06 03:33:47.455 PM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2013-09-06 03:33:47.455 PM	doWork	Send Email to CC For status Completed
+2013-09-06 03:33:47.455 PM	doWork	--------End------------
+2013-09-09 10:24:24.859 AM	doWork	--------Start----------
+2013-09-09 10:24:24.890 AM	doWork	Send email to Validator
+2013-09-09 10:24:24.890 AM	doWork	Create SAP File
+2013-09-09 10:24:38.542 AM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-09 10:25:57.504 AM	doWork	--------Start----------
+2013-09-09 10:25:57.520 AM	doWork	Send email to Validator
+2013-09-09 10:25:57.520 AM	doWork	Create SAP File
+2013-09-09 10:26:00.144 AM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-09 10:26:29.495 AM	doWork	--------Start----------
+2013-09-09 10:26:29.510 AM	doWork	Send email to Validator
+2013-09-09 10:26:29.510 AM	doWork	Create SAP File
+2013-09-09 10:26:29.510 AM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-09 10:30:11.307 AM	doWork	--------Start----------
+2013-09-09 10:30:11.323 AM	doWork	Send email to Validator
+2013-09-09 10:30:11.323 AM	doWork	Create SAP File
+2013-09-09 10:30:11.323 AM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-09 10:36:25.851 AM	doWork	--------Start----------
+2013-09-09 10:36:25.867 AM	doWork	Send email to Validator
+2013-09-09 10:36:25.867 AM	doWork	Create SAP File
+2013-09-09 10:36:25.867 AM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-09 10:37:10.840 AM	doWork	--------Start----------
+2013-09-09 10:37:10.855 AM	doWork	Send email to Validator
+2013-09-09 10:37:10.855 AM	doWork	Create SAP File
+2013-09-09 10:37:10.855 AM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-09 10:38:37.990 AM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2013-09-09 10:38:37.990 AM	doWork	Send Email to CC For status Completed
+2013-09-09 10:38:37.990 AM	doWork	--------End------------
+2013-09-09 10:43:19.420 AM	doWork	--------Start----------
+2013-09-09 10:43:19.435 AM	doWork	Send email to Validator
+2013-09-09 10:43:19.435 AM	doWork	Create SAP File
+2013-09-09 10:43:19.435 AM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-09 10:43:51.021 AM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2013-09-09 10:43:51.021 AM	doWork	Send Email to CC For status Completed
+2013-09-09 10:43:51.021 AM	doWork	--------End------------
+2013-09-09 11:14:52.056 AM	doWork	--------Start----------
+2013-09-09 11:14:52.072 AM	doWork	Send email to Validator
+2013-09-09 11:14:52.072 AM	doWork	Create SAP File
+2013-09-09 11:14:52.072 AM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-09 11:15:07.456 AM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2013-09-09 11:15:07.456 AM	doWork	Send Email to CC For status Completed
+2013-09-09 11:15:07.456 AM	doWork	--------End------------
+2013-09-09 11:19:12.887 AM	doWork	--------Start----------
+2013-09-09 11:19:12.903 AM	doWork	Send email to Validator
+2013-09-09 11:19:12.903 AM	doWork	Create SAP File
+2013-09-09 11:19:12.903 AM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-09 11:50:17.263 AM	doWork	--------Start----------
+2013-09-09 11:50:17.295 AM	doWork	Send email to Validator
+2013-09-09 11:54:39.446 AM	doWork	Create SAP File
+2013-09-09 11:55:39.696 AM	doWork	
+2013-09-09 11:58:31.415 AM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-09 11:59:35.679 AM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2013-09-09 12:15:07.333 PM	doWork	Send Email to CC For status Completed
+2013-09-09 12:16:41.348 PM	doWork	--------End------------
+2013-09-09 12:20:06.629 PM	doWork	--------Start----------
+2013-09-09 12:20:06.645 PM	doWork	Send email to Validator
+2013-09-09 12:20:32.168 PM	doWork	Create SAP File
+2013-09-09 12:20:33.121 PM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-09 12:20:34.011 PM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2013-09-09 12:20:36.245 PM	doWork	Send Email to CC For status Completed
+2013-09-09 12:20:37.979 PM	doWork	--------End------------
+2013-09-09 12:24:31.787 PM	doWork	--------Start----------
+2013-09-09 12:24:31.802 PM	doWork	Send email to Validator
+2013-09-09 12:24:40.800 PM	doWork	Create SAP File
+2013-09-09 12:24:41.581 PM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-09 12:24:42.221 PM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2013-09-09 12:24:43.674 PM	doWork	Send Email to CC For status Completed
+2013-09-09 12:24:45.283 PM	doWork	--------End------------
+2013-09-09 12:25:02.528 PM	doWork	--------Start----------
+2013-09-09 12:25:02.544 PM	doWork	Send email to Validator
+2013-09-09 12:25:10.635 PM	doWork	Create SAP File
+2013-09-09 12:25:11.494 PM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-09 12:25:12.010 PM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2013-09-09 12:25:13.431 PM	doWork	Send Email to CC For status Completed
+2013-09-09 12:25:14.915 PM	doWork	--------End------------
+2013-09-09 12:26:05.948 PM	doWork	--------Start----------
+2013-09-09 12:26:05.979 PM	doWork	Send email to Validator
+2013-09-09 12:26:12.899 PM	doWork	Create SAP File
+2013-09-09 12:26:12.914 PM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-09 12:26:12.914 PM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2013-09-09 12:26:12.930 PM	doWork	Send Email to CC For status Completed
+2013-09-09 12:26:12.930 PM	doWork	--------End------------
+2013-09-09 12:31:24.780 PM	doWork	--------Start----------
+2013-09-09 12:31:24.795 PM	doWork	Send email to Validator
+2013-09-09 12:31:35.495 PM	doWork	Create SAP File
+2013-09-09 12:31:35.636 PM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-09 12:37:29.601 PM	doWork	--------Start----------
+2013-09-09 12:37:29.616 PM	doWork	Send email to Validator
+2013-09-09 12:37:33.506 PM	doWork	Create SAP File
+2013-09-09 12:37:33.553 PM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-09 12:39:56.514 PM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2013-09-09 12:42:03.954 PM	doWork	Send Email to CC For status Completed
+2013-09-09 12:43:36.887 PM	doWork	--------End------------
+2013-09-09 12:45:01.213 PM	doWork	--------Start----------
+2013-09-09 12:45:01.229 PM	doWork	Send email to Validator
+2013-09-09 12:45:04.774 PM	doWork	Create SAP File
+2013-09-09 12:45:04.790 PM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-09-09 12:45:43.322 PM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2013-09-09 12:45:44.072 PM	doWork	Send Email to CC For status Completed
+2013-09-09 12:45:44.993 PM	doWork	--------End------------
+2013-09-10 12:47:22.065 PM	doWork	--------Start----------
+2013-09-10 12:47:22.096 PM	doWork	Send email to Validator
+2013-09-10 12:47:22.503 PM	doWork	Create SAP File
+2013-09-10 12:47:22.518 PM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-11-08 11:27:07.050 AM	doWork	--------Start----------
+2013-11-08 11:27:34.435 AM	doWork	CrossCheck with PriceList - Assign Status Completed
+2013-11-08 11:44:49.307 AM	doWork	--------End------------
+2014-01-29 11:38:22.264 AM	doWork	--------Start----------
+2014-01-29 11:38:32.700 AM	doWork	Send email to Validator
+2014-01-29 11:39:07.615 AM	doWork	Create SAP File
+2014-01-29 11:45:23.389 AM	doWork	CrossCheck with PriceList - Assign Status Completed
+2014-01-29 11:46:17.127 AM	doWork	--------Start----------
+2014-01-29 11:46:28.137 AM	doWork	Create SAP File
+2014-01-29 11:53:16.236 AM	doWork	CrossCheck with PriceList - Assign Status Completed
+2014-01-29 11:53:33.298 AM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2014-01-29 11:54:40.685 AM	doWork	--------Start----------
+2014-01-29 11:54:42.187 AM	doWork	Send email to Validator
+2014-01-29 12:02:56.706 PM	doWork	Create SAP File
+2014-01-29 12:03:11.796 PM	doWork	CrossCheck with PriceList - Assign Status Completed
+2014-01-29 12:03:40.352 PM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2014-01-29 12:04:50.600 PM	doWork	Send Email to CC For status Completed
+2014-01-29 12:05:00.753 PM	doWork	--------End------------
+2014-02-11 02:34:05.245 PM	doWork	--------Start----------
+2014-02-20 01:53:23.103 PM	doWork	--------Start----------
+2014-02-20 01:54:08.794 PM	doWork	CrossCheck with PriceList - Assign Status Completed
+2014-02-20 02:00:12.947 PM	doWork	--------Start----------
+2014-02-20 02:00:24.416 PM	doWork	CrossCheck with PriceList - Assign Status Completed
+2014-02-20 02:05:23.474 PM	doWork	Send Email to Creator for Status Rejected and (Validated and PriceType = STD) and Completed
+2014-02-20 02:07:37.511 PM	doWork	Send Email to CC For status Completed
+2014-02-20 02:08:01.564 PM	doWork	--------End------------
+2014-07-30 02:25:49.997 PM	doWork	--------Start----------
+2014-07-30 02:26:33.973 PM	doWork	--------Start----------
+2014-07-30 02:26:40.312 PM	doWork	Send email to Validator
+2014-07-30 02:33:04.448 PM	doWork	--------Start----------
+2014-07-30 02:33:04.843 PM	doWork	Send email to Validator
+2014-10-13 03:39:45.628 PM	doWork	--------Start----------
+2014-10-13 03:39:46.559 PM	doWork	Send Auto PriceChange Summary
+2014-10-13 03:39:47.002 PM	doWork	Send email to Assigned User
+2014-10-13 03:40:50.699 PM	doWork	--------Start----------
+2014-10-13 03:40:50.730 PM	doWork	Send Auto PriceChange Summary
+2014-10-13 03:40:50.731 PM	doWork	Send email to Assigned User
+2014-10-13 03:42:16.349 PM	doWork	--------End------------
+2014-10-13 03:42:50.346 PM	doWork	--------Start----------
+2014-10-13 03:42:50.817 PM	doWork	Send Auto PriceChange Summary
+2014-10-13 03:42:51.046 PM	doWork	Send email to Assigned User
+2014-10-13 03:42:52.987 PM	doWork	--------End------------
+2014-10-13 03:43:15.687 PM	doWork	--------Start----------
+2014-10-13 03:43:15.715 PM	doWork	Send Auto PriceChange Summary
+2014-10-13 03:43:15.715 PM	doWork	Send email to Assigned User
+2014-10-13 03:44:40.783 PM	doWork	--------End------------
+2014-10-13 03:44:47.040 PM	doWork	--------Start----------
+2014-10-13 03:44:47.070 PM	doWork	Send Auto PriceChange Summary
+2014-10-13 03:44:47.071 PM	doWork	Send email to Assigned User
+2014-10-13 03:46:02.267 PM	doWork	--------Start----------
+2014-10-13 03:46:02.282 PM	doWork	Send Auto PriceChange Summary
+2014-10-13 03:46:02.282 PM	doWork	Send email to Assigned User
+2014-10-13 03:47:00.323 PM	doWork	--------Start----------
+2014-10-13 03:47:00.360 PM	doWork	Send Auto PriceChange Summary
+2014-10-13 03:47:00.360 PM	doWork	Send email to Assigned User
+2014-10-13 03:49:40.485 PM	doWork	--------Start----------
+2014-10-13 03:49:40.514 PM	doWork	Send Auto PriceChange Summary
+2014-10-13 03:49:40.515 PM	doWork	Send email to Assigned User
+2014-10-13 03:50:05.577 PM	doWork	--------Start----------
+2014-10-13 03:50:05.608 PM	doWork	Send Auto PriceChange Summary
+2014-10-13 03:50:05.609 PM	doWork	Send email to Assigned User
+2014-10-13 03:50:39.334 PM	doWork	--------Start----------
+2014-10-13 03:50:39.362 PM	doWork	Send Auto PriceChange Summary
+2014-10-13 03:50:39.362 PM	doWork	Send email to Assigned User
+2014-10-13 03:51:54.203 PM	doWork	--------Start----------
+2014-10-13 03:51:54.221 PM	doWork	Send Auto PriceChange Summary
+2014-10-13 03:51:54.222 PM	doWork	Send email to Assigned User
+2014-10-13 03:52:44.260 PM	doWork	--------Start----------
+2014-10-13 03:52:44.296 PM	doWork	Send Auto PriceChange Summary
+2014-10-13 03:52:44.297 PM	doWork	Send email to Assigned User
+2014-10-13 03:53:46.531 PM	doWork	--------Start----------
+2014-10-13 03:53:46.558 PM	doWork	Send Auto PriceChange Summary
+2014-10-13 03:53:46.559 PM	doWork	Send email to Assigned User
+2014-10-13 03:55:30.032 PM	doWork	--------Start----------
+2014-10-13 03:55:30.050 PM	doWork	Send Auto PriceChange Summary
+2014-10-13 03:55:30.051 PM	doWork	Send email to Assigned User
+2014-10-13 03:57:02.015 PM	doWork	--------End------------
+2014-10-13 04:08:02.592 PM	doWork	CrossCheck with PriceList - Assign Status Completed
+2014-10-13 04:42:54.179 PM	doWork	--------Start----------
+2014-10-13 04:42:54.894 PM	doWork	Send email to Validator
+2014-10-13 05:33:00.212 PM	doWork	--------Start----------
+2014-10-13 05:33:00.227 PM	doWork	Send Auto PriceChange Summary
+2014-10-13 05:33:00.227 PM	doWork	Send email to Assigned User
+2014-10-13 05:33:20.832 PM	doWork	--------End------------
+2014-10-13 05:33:32.365 PM	doWork	--------Start----------
+2014-10-13 05:33:32.405 PM	doWork	Send Auto PriceChange Summary
+2014-10-13 05:33:32.406 PM	doWork	Send email to Assigned User
+2014-10-13 05:36:42.188 PM	doWork	--------End------------
+2014-10-13 05:41:11.188 PM	doWork	--------Start----------
+2014-10-13 05:41:11.959 PM	doWork	Send Auto PriceChange Summary
+2014-10-13 05:41:11.962 PM	doWork	Send email to Assigned User
+2014-10-13 05:43:23.519 PM	doWork	--------End------------
+2014-10-14 10:30:24.855 AM	doWork	--------Start----------
+2014-10-14 10:30:24.879 AM	doWork	Send Auto PriceChange Summary
+2014-10-14 10:30:24.880 AM	doWork	Send email to Assigned User
+2014-10-14 10:35:31.272 AM	doWork	--------End------------
+2014-10-14 10:39:47.731 AM	doWork	--------Start----------
+2014-10-14 10:39:47.959 AM	doWork	Send Auto PriceChange Summary
+2014-10-14 10:39:48.176 AM	doWork	Send email to Assigned User
+2014-10-14 10:42:36.020 AM	doWork	--------Start----------
+2014-10-14 10:42:36.043 AM	doWork	Send Auto PriceChange Summary
+2014-10-14 10:42:36.043 AM	doWork	Send email to Assigned User
+2014-10-14 10:43:32.173 AM	doWork	--------End------------
+2014-10-14 10:56:30.011 AM	doWork	--------Start----------
+2014-10-14 10:56:30.041 AM	doWork	Send Auto PriceChange Summary
+2014-10-14 10:56:30.042 AM	doWork	Send email to Assigned User
+2014-10-14 10:56:40.297 AM	doWork	--------End------------
+2014-10-14 10:57:56.062 AM	doWork	--------Start----------
+2014-10-14 10:57:56.106 AM	doWork	Send Auto PriceChange Summary
+2014-10-14 10:57:56.107 AM	doWork	Send email to Assigned User
+2014-10-14 10:58:06.439 AM	doWork	--------End------------
+2014-10-20 09:23:28.415 AM	doWork	--------Start----------
+2014-10-20 09:23:28.460 AM	doWork	Send Auto PriceChange Summary
+2014-10-20 09:23:28.460 AM	doWork	Send email to Assigned User
+2014-10-21 09:48:56.931 AM	doWork	--------Start----------
+2014-10-21 09:48:56.953 AM	doWork	Send Auto PriceChange Summary
+2014-10-21 09:48:56.954 AM	doWork	Send email to Assigned User
+2014-10-21 09:51:56.635 AM	doWork	--------End------------
+2014-10-24 02:43:20.385 PM	doWork	--------Start----------
+2014-10-24 02:43:20.399 PM	doWork	Send Auto PriceChange Summary
+2014-10-24 02:43:20.400 PM	doWork	Send email to Assigned User
+2014-10-29 09:50:06.247 AM	doWork	--------Start----------
+2014-10-29 09:50:13.729 AM	doWork	Send email to Validator
+2014-10-29 09:55:12.794 AM	doWork	Send Email to CC For status Completed
+2014-10-29 09:56:01.673 AM	doWork	--------End------------
+2015-05-21 11:42:56.370 AM	doWork	--------Start----------
+2015-05-21 11:43:42.329 AM	doWork	Send Auto PriceChange Summary
+2015-05-21 11:44:03.152 AM	doWork	Send email to Assigned User
+2015-05-21 11:45:15.150 AM	doWork	--------End------------
+2015-05-21 11:45:59.272 AM	doWork	--------Start----------
+2015-05-21 11:46:01.616 AM	doWork	Send Auto PriceChange Summary
+2015-05-21 11:46:02.190 AM	doWork	Send email to Assigned User
+2015-05-21 11:51:44.195 AM	doWork	--------Start----------
+2015-05-21 11:51:47.524 AM	doWork	Send Auto PriceChange Summary
+2015-05-21 11:51:48.322 AM	doWork	Send email to Assigned User
+2016-02-24 03:45:11.334 PM	doWork	--------Start----------
+2016-02-24 03:45:27.331 PM	doWork	Send email to Validator
+2016-03-09 03:43:38.327 PM	doWork	--------Start----------
+2016-03-09 03:43:42.391 PM	doWork	Send email to Validator
+2016-03-09 03:50:11.550 PM	doWork	Send Email to CC For status Completed
+2016-03-09 03:56:11.119 PM	doWork	--------Start----------
+2016-03-09 03:56:13.430 PM	doWork	Send Auto PriceChange Summary
+2016-03-09 03:56:16.272 PM	doWork	Send email to Assigned User
+2016-03-09 03:59:59.337 PM	doWork	--------Start----------
+2016-03-09 03:59:59.393 PM	doWork	Send Auto PriceChange Summary
+2016-03-09 03:59:59.394 PM	doWork	Send email to Assigned User
+2016-03-10 09:26:37.047 AM	doWork	--------Start----------
+2016-03-10 09:26:38.323 AM	doWork	Send email to Validator
+2016-03-10 09:27:03.981 AM	doWork	
+2016-03-10 09:27:03.982 AM	doWork	Create SAP File
+2016-03-10 09:28:19.061 AM	doWork	--------Start----------
+2016-03-10 09:28:24.590 AM	doWork	Send email to Validator
+2016-03-10 09:39:08.278 AM	doWork	--------Start----------
+2016-03-10 09:39:08.346 AM	doWork	Send Auto PriceChange Summary
+2016-03-10 09:39:08.350 AM	doWork	Send email to Assigned User
+2017-05-04 03:34:37.884 PM	doWork	--------Start----------
+2017-05-04 03:46:31.256 PM	doWork	CrossCheck with PriceList - Assign Status Completed
+2017-05-04 03:59:18.317 PM	doWork	CrossCheck with PriceList - Assign Status Completed
+2017-05-19 09:38:16.621 AM	doWork	--------Start----------
+2017-05-29 04:59:07.797 PM	doWork	--------Start----------
+2017-12-08 09:12:16.342 AM	doWork	--------Start----------
+2017-12-08 09:12:18.425 AM	doWork	Send email to Validator
+2017-12-08 09:16:30.971 AM	doWork	--------Start----------
+2017-12-08 09:16:31.888 AM	doWork	Send email to Validator
+2017-12-08 09:19:43.964 AM	doWork	Create New SAP File
+2017-12-08 09:19:48.892 AM	doWork	CrossCheck with PriceList - Assign Status Completed
+2017-12-08 09:21:25.561 AM	doWork	Send Email to WMF For status Completed
+2017-12-08 09:25:50.077 AM	doWork	--------Start----------
+2017-12-08 09:25:51.033 AM	doWork	Send email to Validator
+2017-12-08 09:26:38.270 AM	doWork	Send Email to WMF For status Completed
+2017-12-08 09:28:36.944 AM	doWork	--------End------------
+2017-12-08 09:31:59.949 AM	doWork	--------Start----------
+2017-12-08 10:22:13.922 AM	Execute	ERROR: 42883: function sp_updatepricechangehdemailsend(integer, boolean, boolean, boolean, boolean) does not exist
+2017-12-08 10:26:42.831 AM	doWork	--------End------------
+2018-05-18 03:38:41.324 PM	doWork	--------Start----------
+2018-05-18 03:38:43.596 PM	doWork	Send email to Validator
+2018-05-21 04:59:46.068 PM	doWork	--------Start----------
+2018-05-28 10:31:12.788 AM	doWork	--------Start----------
+2018-05-28 10:31:13.977 AM	doWork	Send email to Validator
+2018-07-05 02:27:57.522 PM	doWork	--------Start----------
+2018-07-05 02:27:59.053 PM	doWork	Send email to Validator
+2018-11-30 02:27:28.221 PM	doWork	--------Start----------
+2018-11-30 02:27:28.239 PM	doWork	Send Auto PriceChange Summary
+2018-11-30 02:27:28.241 PM	doWork	Send email to Assigned User
+2018-11-30 02:28:02.258 PM	doWork	--------End------------
+2018-11-30 02:28:45.537 PM	doWork	--------Start----------
+2018-11-30 02:28:45.558 PM	doWork	Send Auto PriceChange Summary
+2018-11-30 02:28:45.559 PM	doWork	Send email to Assigned User
+2018-11-30 02:33:53.422 PM	doWork	--------End------------
+2019-05-30 09:48:03.725 AM	doWork	--------Start----------
+2019-05-30 09:48:04.895 AM	doWork	Send email to Validator
+2019-06-03 09:32:22.971 AM	doWork	--------Start----------
