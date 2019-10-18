@@ -125,4 +125,9 @@ Public Class FormMenu
     Private Sub ReportToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ReportToolStripMenuItem.Click
 
     End Sub
+
+    Private Sub CurrencyToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CurrencyToolStripMenuItem.Click
+        Dim myform As New FormCurrency
+        myform.Show()
+    End Sub
 End Class

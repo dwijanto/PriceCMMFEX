@@ -99,10 +99,22 @@
     </Compile>
     <Compile Include="Class\UpdatePriceChangeReason.vb" />
     <Compile Include="Class\ValidateSAPPrice.vb" />
+    <Compile Include="Form\DialogInputCurrency.Designer.vb">
+      <DependentUpon>DialogInputCurrency.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\DialogInputCurrency.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form\DialogInputSpecialProject.Designer.vb">
       <DependentUpon>DialogInputSpecialProject.vb</DependentUpon>
     </Compile>
     <Compile Include="Form\DialogInputSpecialProject.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\FormCurrency.Designer.vb">
+      <DependentUpon>FormCurrency.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\FormCurrency.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form\FormDocumentHeader.Designer.vb">
@@ -288,8 +300,14 @@
     <EmbeddedResource Include="Class\UCPeriodRange.resx">
       <DependentUpon>UCPeriodRange.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Form\DialogInputCurrency.resx">
+      <DependentUpon>DialogInputCurrency.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form\DialogInputSpecialProject.resx">
       <DependentUpon>DialogInputSpecialProject.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\FormCurrency.resx">
+      <DependentUpon>FormCurrency.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\FormDocumentHeader.resx">
       <DependentUpon>FormDocumentHeader.vb</DependentUpon>

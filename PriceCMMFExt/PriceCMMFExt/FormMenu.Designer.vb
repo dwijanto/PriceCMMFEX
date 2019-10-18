@@ -39,12 +39,14 @@ Partial Class FormMenu
         Me.SupplierDocumentsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.UserGuideToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MasterToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CurrencyToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'MenuStrip1
         '
-        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ImportToolStripMenuItem, Me.ReportToolStripMenuItem, Me.PriceChangeTaskToolStripMenuItem, Me.SupplierDocumentsToolStripMenuItem, Me.HelpToolStripMenuItem})
+        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ImportToolStripMenuItem, Me.ReportToolStripMenuItem, Me.PriceChangeTaskToolStripMenuItem, Me.MasterToolStripMenuItem, Me.SupplierDocumentsToolStripMenuItem, Me.HelpToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.Size = New System.Drawing.Size(547, 24)
@@ -131,7 +133,7 @@ Partial Class FormMenu
         'PriceChangeTaskToolStripMenuItem
         '
         Me.PriceChangeTaskToolStripMenuItem.Name = "PriceChangeTaskToolStripMenuItem"
-        Me.PriceChangeTaskToolStripMenuItem.Size = New System.Drawing.Size(116, 20)
+        Me.PriceChangeTaskToolStripMenuItem.Size = New System.Drawing.Size(115, 20)
         Me.PriceChangeTaskToolStripMenuItem.Text = "Price Change Task"
         '
         'SupplierDocumentsToolStripMenuItem
@@ -154,6 +156,19 @@ Partial Class FormMenu
         Me.UserGuideToolStripMenuItem.Name = "UserGuideToolStripMenuItem"
         Me.UserGuideToolStripMenuItem.Size = New System.Drawing.Size(131, 22)
         Me.UserGuideToolStripMenuItem.Text = "User Guide"
+        '
+        'MasterToolStripMenuItem
+        '
+        Me.MasterToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CurrencyToolStripMenuItem})
+        Me.MasterToolStripMenuItem.Name = "MasterToolStripMenuItem"
+        Me.MasterToolStripMenuItem.Size = New System.Drawing.Size(55, 20)
+        Me.MasterToolStripMenuItem.Text = "Master"
+        '
+        'CurrencyToolStripMenuItem
+        '
+        Me.CurrencyToolStripMenuItem.Name = "CurrencyToolStripMenuItem"
+        Me.CurrencyToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.CurrencyToolStripMenuItem.Text = "Currency"
         '
         'FormMenu
         '
@@ -187,5 +202,7 @@ Partial Class FormMenu
     Friend WithEvents HelpToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents UserGuideToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents PO39ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents MasterToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents CurrencyToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
 End Class

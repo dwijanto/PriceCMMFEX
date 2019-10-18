@@ -83,6 +83,7 @@ Public Class FormImportZFA037
     End Sub
     Sub DoWork()
         Dim sw As New Stopwatch
+        Dim sw2 As New Stopwatch
         Dim DS As New DataSet
         Dim mystr As New StringBuilder
         'Dim enddate As Date
@@ -116,14 +117,15 @@ Public Class FormImportZFA037
                  "select setval('pricelist_pricelistid_seq'::regclass,1,false);" &
                  "select setval('priceplant_priceplantid_seq'::regclass,1,false);" &
                  "select setval('priceplantscale_id_seq'::regclass,1,false);"
-
+        sw2.Start()
         If Not DbAdapter1.ExecuteNonQuery(sqlstr, message:=mymessage) Then
             ProgressReport(2, mymessage)
             Exit Sub
         End If
         pricelistid = 0
-
-
+        ProgressReport(2, String.Format("Delete Pricelist ..........."))
+        sw2.Stop()
+        ProgressReport(1, String.Format("Delete Pricelist Done. Elapsed Time: {0}:{1}.{2}", Format(sw2.Elapsed.Minutes, "00"), Format(sw2.Elapsed.Seconds, "00"), sw2.Elapsed.Milliseconds.ToString))
 
         Using objTFParser = New FileIO.TextFieldParser(OpenFileDialog1.FileName)
             With objTFParser
@@ -215,7 +217,7 @@ Public Class FormImportZFA037
                     ProgressReport(1, ex.Message)
                     Exit Sub
                 End Try
-                
+
                 ProgressReport(2, "Build Record...")
                 ProgressReport(5, "Continuous")
 
@@ -229,6 +231,8 @@ Public Class FormImportZFA037
                 priceplntScaleSB = New StringBuilder
                 PCCMMFSB = New StringBuilder
                 Dim i As Long
+                sw2.Start()
+
                 Try
                     For i = 0 To mylist.Count - 1
                         'find the record in existing table.
@@ -287,7 +291,7 @@ Public Class FormImportZFA037
                                     End If
                                 End If
 
-                                
+
                                 If update Then
                                     If VendorUpdateSB.Length > 0 Then
                                         VendorUpdateSB.Append(",")
@@ -372,7 +376,7 @@ Public Class FormImportZFA037
                                 DS.Tables(3).Rows.Add(dr)
                                 PCCMMFSB.Append(myrecord(4) & vbTab &
                                               myrangeid & vbCrLf)
-                            
+
                             End If
 
                             'Find Price List if not avail then add to PricelistSB
@@ -397,7 +401,7 @@ Public Class FormImportZFA037
                                 dr.Item(3) = myrecord(15)
                                 dr.Item(4) = pricelistid
                                 DS.Tables(0).Rows.Add(dr)
-                                
+
                                 'cmmf,scaleqty,amount,perunit,validfrom,validto,vendorcode,currency)    
                                 PricelistSB.Append(myrecord(4) & vbTab &
                                                     validreal(myrecord(9)) & vbTab &
@@ -409,13 +413,13 @@ Public Class FormImportZFA037
                                                     validstr(myrecord(11)) & vbTab &
                                                     validstr(myrecord(13)) & vbCrLf)
                                 priceplntSB.Append(pricelistid & vbTab &
-                                                   myrecord(1) & vbCrLf)                               
+                                                   myrecord(1) & vbCrLf)
                             Else
                                 PriceListIdTemp = result.Item("pricelistid")
                                 'priceplntSB.Append(PriceListIdTemp & vbTab &
                                 '                  myrecord(1) & vbCrLf)
                             End If
-                           
+
                             priceplntScaleSB.Append(PriceListIdTemp & vbTab &
                                                         myrecord(1) & vbTab &
                                                         validreal(myrecord(12)) & vbTab &
@@ -429,6 +433,10 @@ Public Class FormImportZFA037
                 End Try
             End With
         End Using
+        sw2.Stop()        
+        ProgressReport(1, String.Format("Build Record Done. Elapsed Time: {0}:{1}.{2}", Format(sw2.Elapsed.Minutes, "00"), Format(sw2.Elapsed.Seconds, "00"), sw2.Elapsed.Milliseconds.ToString))
+        sw2.Start()
+
         'update record
         Dim myret As Boolean = False
         Try
@@ -540,6 +548,8 @@ Public Class FormImportZFA037
             ProgressReport(1, ex.Message)
 
         End Try
+        sw2.Stop()
+        ProgressReport(1, String.Format("Copy Done. Elapsed Time: {0}:{1}.{2}", Format(sw2.Elapsed.Minutes, "00"), Format(sw2.Elapsed.Seconds, "00"), sw2.Elapsed.Milliseconds.ToString))
         ProgressReport(5, "Continue")
         sw.Stop()
         If myret Then

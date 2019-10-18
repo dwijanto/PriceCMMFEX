@@ -27,5 +27,8 @@
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">host=hon14nt;port=5432;database=LogisticDb;commandTimeout=1000;Timeout=1000;</Value>
     </Setting>
+    <Setting Name="conLocal" Type="System.String" Scope="User">
+      <Value Profile="(Default)">host=localhost;port=5433;database=LogisticDb;CommandTimeout=1000;TimeOut=1000;</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

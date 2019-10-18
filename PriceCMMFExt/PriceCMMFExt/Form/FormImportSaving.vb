@@ -55,7 +55,7 @@ Public Class FormImportSaving
 
     Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click
         Dim SaveFileDialog1 = New SaveFileDialog
-        SaveFileDialog1.FileName = "Saving.csv"
+        SaveFileDialog1.FileName = String.Format("{0:yyyyMMdd}-Saving.TXT", Date.Today)
         If SaveFileDialog1.ShowDialog = DialogResult.OK Then
             FileName = SaveFileDialog1.FileName
             myThread = New Thread(AddressOf DoSaveFile)
@@ -122,132 +122,139 @@ Public Class FormImportSaving
         Dim typeid As Long
         Dim actionid As Long
         Dim sqlstr As String = String.Empty
-
+        Dim hasError As Boolean = False
         Dim mymessage As String = String.Empty
         sw.Start()
-        Using objTFParser = New FileIO.TextFieldParser(OpenFileDialog1.FileName)
-            With objTFParser
-                .TextFieldType = FileIO.FieldType.Delimited
-                .SetDelimiters(Chr(9))
-                .HasFieldsEnclosedInQuotes = True
-                Dim count As Long = 0
-
-                'FillData
-                ProgressReport(2, "Initialize Table..")
-                sqlstr = "select savingid,actionid,cmmf,mytotal,startdate,enddate from saving;" &
-                         " select savinglookupid,savinglookupname,parentid from savinglookup order by savinglookupid desc;"
-
-                mymessage = String.Empty
-                If Not DbAdapter1.TbgetDataSet(sqlstr, DS, mymessage) Then
-                    ProgressReport(2, mymessage)
-                    Exit Sub
-                End If
-
-                DS.Tables(0).TableName = "Saving"
-                Dim idx0(2) As DataColumn
-                idx0(0) = DS.Tables(0).Columns(1)
-                idx0(1) = DS.Tables(0).Columns(2)
-                idx0(2) = DS.Tables(0).Columns(4)
-
-                DS.Tables(0).PrimaryKey = idx0
-
-                DS.Tables(1).TableName = "savinglookup"
-                Dim idx1(0) As DataColumn
-                idx1(0) = DS.Tables(1).Columns(1)
-                DS.Tables(1).CaseSensitive = True
-                DS.Tables(1).PrimaryKey = idx1
-
-
-                If DS.Tables(1).Rows.Count > 0 Then
-                    SavingLookupSeq = DS.Tables(1).Rows(0).Item(0)
-                    myseqid = SavingLookupSeq + 1
-
-                End If
-                updatesequencesqlstr = "select setval('savinglookup_savinglookupid_seq'," & myseqid & ",false);"
-
-                ProgressReport(2, "Read Text File...")
-                Do Until .EndOfData
-                    myrecord = .ReadFields
-                    If count > 0 Then
-                        mylist.Add(myrecord)
-                    End If
-                    count += 1
-                Loop
-                ProgressReport(2, "Build Record...")
-                ProgressReport(5, "Continuous")
-                Try
-                    For i = 0 To mylist.Count - 1
-                        'find the record in existing table.
-                        ProgressReport(7, i + 1 & "," & mylist.Count)
-                        myrecord = mylist(i)
-                        If i >= 0 Then
-
-                            enddate = CDate(myrecord(4)).AddYears(validperiod)
-                            Dim result As DataRow
-
-                            Dim pkey1(0) As Object
-                            pkey1(0) = myrecord(0)
-                            result = DS.Tables(1).Rows.Find(pkey1)
-                            If IsNothing(result) Then
-                                SavingLookupSeq += 1
-                                Dim dr As DataRow = DS.Tables(1).NewRow
-                                dr.Item(0) = SavingLookupSeq
-                                dr.Item(1) = myrecord(0)
-                                dr.Item(2) = 0
-                                DS.Tables(1).Rows.Add(dr)
-                                typeid = SavingLookupSeq
-                            Else
-                                typeid = result.Item(0)
-                            End If
-
-                            'check actionid
-                            Dim pkey2(0) As Object
-                            pkey2(0) = myrecord(1)
-                            result = DS.Tables(1).Rows.Find(pkey2)
-                            If IsNothing(result) Then
-                                SavingLookupSeq += 1
-                                Dim dr As DataRow = DS.Tables(1).NewRow
-                                dr.Item(0) = SavingLookupSeq
-                                dr.Item(1) = myrecord(1)
-                                dr.Item(2) = typeid
-                                DS.Tables(1).Rows.Add(dr)
-                                actionid = SavingLookupSeq
-                            Else
-                                actionid = result.Item(0)
-                            End If
-
-                            Dim pkey(2) As Object
-                            pkey(0) = actionid
-                            pkey(1) = myrecord(2)
-                            pkey(2) = myrecord(4)
-
-                            result = DS.Tables(0).Rows.Find(pkey)
-                            If IsNothing(result) Then
-                                Dim dr As DataRow = DS.Tables(0).NewRow
-                                dr.Item(1) = actionid
-                                dr.Item(2) = myrecord(2)
-                                dr.Item(3) = myrecord(3)
-                                dr.Item(4) = myrecord(4)
-                                dr.Item(5) = enddate
-                                DS.Tables(0).Rows.Add(dr)
-                            Else
-                                If result.Item("mytotal") <> myrecord(3) Then
-                                    result.Item("mytotal") = myrecord(3)
-                                End If
-                                If result.Item("enddate") <> enddate Then
-                                    result.Item("enddate") = enddate
-                                End If
-                            End If
-                        End If
-                    Next
-                Catch ex As Exception
-                    ProgressReport(2, ex.Message)
-                    Exit Sub
-                End Try
-            End With
-        End Using
-        'update record
         Try
+            Using objTFParser = New FileIO.TextFieldParser(OpenFileDialog1.FileName)
+                With objTFParser
+                    .TextFieldType = FileIO.FieldType.Delimited
+                    .SetDelimiters(Chr(9))
+                    .HasFieldsEnclosedInQuotes = True
+                    Dim count As Long = 0
+
+                    'FillData
+                    ProgressReport(2, "Initialize Table..")
+                    sqlstr = "select savingid,actionid,cmmf,mytotal,startdate,enddate,vendorcode from saving;" &
+                             " select savinglookupid,savinglookupname,parentid from savinglookup order by savinglookupid desc;"
+
+                    mymessage = String.Empty
+                    If Not DbAdapter1.TbgetDataSet(sqlstr, DS, mymessage) Then
+                        ProgressReport(2, mymessage)
+                        Exit Sub
+                    End If
+
+                    DS.Tables(0).TableName = "Saving"
+                    Dim idx0(3) As DataColumn
+                    idx0(0) = DS.Tables(0).Columns(1)
+                    idx0(1) = DS.Tables(0).Columns(2)
+                    idx0(2) = DS.Tables(0).Columns(4)
+                    idx0(3) = DS.Tables(0).Columns(6)
+
+                    DS.Tables(0).PrimaryKey = idx0
+
+                    DS.Tables(1).TableName = "savinglookup"
+                    Dim idx1(0) As DataColumn
+                    idx1(0) = DS.Tables(1).Columns(1)
+                    DS.Tables(1).CaseSensitive = True
+                    DS.Tables(1).PrimaryKey = idx1
+
+
+                    If DS.Tables(1).Rows.Count > 0 Then
+                        SavingLookupSeq = DS.Tables(1).Rows(0).Item(0)
+                        myseqid = SavingLookupSeq + 1
+
+                    End If
+                    updatesequencesqlstr = "select setval('savinglookup_savinglookupid_seq'," & myseqid & ",false);"
+
+                    ProgressReport(2, "Read Text File...")
+                    Do Until .EndOfData
+                        myrecord = .ReadFields
+                        If count > 0 Then
+                            mylist.Add(myrecord)
+                        End If
+                        count += 1
+                    Loop
+                    ProgressReport(2, "Build Record...")
+                    ProgressReport(5, "Continuous")
+                    Dim i As Integer
+                    Try
+                        For i = 0 To mylist.Count - 1
+                            'find the record in existing table.
+                            ProgressReport(7, i + 1 & "," & mylist.Count)
+                            myrecord = mylist(i)
+                            If i >= 0 Then
+
+                                enddate = CDate(myrecord(4)).AddYears(validperiod)
+                                Dim result As DataRow
+
+                                Dim pkey1(0) As Object
+                                pkey1(0) = myrecord(0)
+                                result = DS.Tables(1).Rows.Find(pkey1)
+                                If IsNothing(result) Then
+                                    SavingLookupSeq += 1
+                                    Dim dr As DataRow = DS.Tables(1).NewRow
+                                    dr.Item(0) = SavingLookupSeq
+                                    dr.Item(1) = myrecord(0)
+                                    dr.Item(2) = 0
+                                    DS.Tables(1).Rows.Add(dr)
+                                    typeid = SavingLookupSeq
+                                Else
+                                    typeid = result.Item(0)
+                                End If
+
+                                'check actionid
+                                Dim pkey2(0) As Object
+                                pkey2(0) = myrecord(1)
+                                result = DS.Tables(1).Rows.Find(pkey2)
+                                If IsNothing(result) Then
+                                    SavingLookupSeq += 1
+                                    Dim dr As DataRow = DS.Tables(1).NewRow
+                                    dr.Item(0) = SavingLookupSeq
+                                    dr.Item(1) = myrecord(1)
+                                    dr.Item(2) = typeid
+                                    DS.Tables(1).Rows.Add(dr)
+                                    actionid = SavingLookupSeq
+                                Else
+                                    actionid = result.Item(0)
+                                End If
+
+                                Dim pkey(3) As Object
+                                pkey(0) = actionid
+                                pkey(1) = myrecord(2)
+                                pkey(2) = myrecord(4)
+                                pkey(3) = myrecord(5)
+
+                                result = DS.Tables(0).Rows.Find(pkey)
+                                If IsNothing(result) Then
+                                    Dim dr As DataRow = DS.Tables(0).NewRow
+                                    dr.Item(1) = actionid
+                                    dr.Item(2) = myrecord(2)
+                                    dr.Item(3) = myrecord(3)
+                                    dr.Item(4) = myrecord(4)
+                                    dr.Item(5) = enddate
+                                    dr.Item(6) = myrecord(5)
+                                    DS.Tables(0).Rows.Add(dr)
+                                Else
+                                    If result.Item("mytotal") <> myrecord(3) Then
+                                        result.Item("mytotal") = myrecord(3)
+                                    End If
+                                    If result.Item("enddate") <> enddate Then
+                                        result.Item("enddate") = enddate
+                                    End If
+                                End If
+                            End If
+                        Next
+                    Catch ex As Exception
+                        ProgressReport(2, String.Format("Line:{0} {1}", i, ex.Message))
+                        ProgressReport(5, "Continue")
+                        Exit Sub
+                    End Try
+                End With
+            End Using
+            'update record
+
+            'Try
             Dim errmsg As String = String.Empty
             ProgressReport(6, "Marque")
 
@@ -267,22 +274,30 @@ Public Class FormImportSaving
                 End If
             End If
 
-        Catch ex As Exception
-            ProgressReport(1, ex.Message)
+            'Catch ex As Exception
+            '    ProgressReport(1, ex.Message)
 
+            'End Try
+            ProgressReport(5, "Continue")
+            sw.Stop()
+            ProgressReport(2, String.Format("Done. Elapsed Time: {0}:{1}.{2}", Format(sw.Elapsed.Minutes, "00"), Format(sw.Elapsed.Seconds, "00"), sw.Elapsed.Milliseconds.ToString))
+
+
+        Catch ex As Exception
+            ProgressReport(2, ex.Message)
+        Finally
+            ProgressReport(5, "Continue")
         End Try
-        ProgressReport(5, "Continue")
-        sw.Stop()
-        ProgressReport(2, String.Format("Done. Elapsed Time: {0}:{1}.{2}", Format(sw.Elapsed.Minutes, "00"), Format(sw.Elapsed.Seconds, "00"), sw.Elapsed.Milliseconds.ToString))
 
     End Sub
 
     Sub doReaderCallBack(ByRef sender As Object, ByRef e As EventArgs)
         Dim dr As Npgsql.NpgsqlDataReader = DirectCast(sender, Npgsql.NpgsqlDataReader)
         Using sw As StreamWriter = New StreamWriter(FileName)
-            sw.WriteLine("""savingid"",""actionid"",""cmmf"",""mytotal"",""startdate"",""enddate""")
+            sw.WriteLine(String.Format("Type{0}Actionid{0}CMMF{0}Total{0}Effectivedate{0}Vendorcode", vbTab))
             While (dr.Read())
-                sw.WriteLine(String.Format("{0},{1},{2},{3},""{4:yyyy-MM-dd}"",""{5:yyyy-MM-dd}""", dr(0), dr(1), dr(2), dr(3), dr(4), dr(5)))
+                'sw.WriteLine(String.Format("{0},{1},{2},{3},""{4:yyyy-MM-dd}"",""{5:yyyy-MM-dd}""", dr(0), dr(1), dr(2), dr(3), dr(4), dr(5)))
+                sw.WriteLine(String.Format("{0}{6}{1}{6}{2}{6}{3}{6}{4:yyyy-MM-dd}{6}{5}", dr(0), dr(1), dr(2), dr(3), dr(4), dr(5), vbTab))
             End While
         End Using
     End Sub
@@ -293,7 +308,11 @@ Public Class FormImportSaving
         ProgressReport(2, "Generating Raw Data.. Please wait.")
         ProgressReport(6, "Marquee")
         Dim mymessage As String = String.Empty
-        Dim sqlstr As String = String.Format("select savingid,actionid,cmmf,mytotal,startdate,enddate from saving order by startdate;")
+        'Dim sqlstr As String = String.Format("select savingid,actionid,cmmf,mytotal,startdate,enddate from saving order by startdate;")
+        Dim sqlstr As String = String.Format("select s2.savinglookupname as type,s1.savinglookupname as acctionid,cmmf,mytotal,startdate as effectivedate,vendorcode from saving s" &
+                                             " left join savinglookup s1 on s1.savinglookupid = s.actionid" &
+                                             " left join savinglookup s2 on s2.savinglookupid = s1.parentid" &
+                                             " order by s2.savinglookupname,s1.savinglookupname;")
         DbAdapter1.DataReaderCallback = DataReaderCallback
         If Not DbAdapter1.ExecuteReader(sqlstr, message:=mymessage) Then
             sw.Stop()

@@ -500,6 +500,7 @@ Public Class DbAdapter
                     DataAdapter.InsertCommand.Parameters.Add("", NpgsqlTypes.NpgsqlDbType.Numeric, 0, "mytotal").SourceVersion = DataRowVersion.Current
                     DataAdapter.InsertCommand.Parameters.Add("", NpgsqlTypes.NpgsqlDbType.Date, 0, "startdate").SourceVersion = DataRowVersion.Current
                     DataAdapter.InsertCommand.Parameters.Add("", NpgsqlTypes.NpgsqlDbType.Date, 0, "enddate").SourceVersion = DataRowVersion.Current
+                    DataAdapter.InsertCommand.Parameters.Add("", NpgsqlTypes.NpgsqlDbType.Bigint, 0, "vendorcode").SourceVersion = DataRowVersion.Current
                     DataAdapter.InsertCommand.CommandType = CommandType.StoredProcedure
 
                     DataAdapter.UpdateCommand.Transaction = mytransaction
@@ -1029,6 +1030,64 @@ Public Class DbAdapter
         Return myret
     End Function
 
+    Function CurrencyTx(ByVal MyForm As FormCurrency, ByVal mye As ContentBaseEventArgs) As Boolean
+        Dim sqlstr As String = String.Empty
+        Dim DataAdapter As New NpgsqlDataAdapter
+        Dim myret As Boolean = False
+        AddHandler DataAdapter.RowUpdated, New NpgsqlRowUpdatedEventHandler(AddressOf onRowInsertUpdate)
+        Try
+            Using conn As New NpgsqlConnection(Connectionstring)
+                Try
+                    conn.Open()
+
+                    'Family
+                    'Insert
+                    sqlstr = "doc.sp_insertcurency"
+                    DataAdapter.InsertCommand = New NpgsqlCommand(sqlstr, conn)
+                    DataAdapter.InsertCommand.Parameters.Add("", NpgsqlTypes.NpgsqlDbType.Varchar, 0, "crcy").SourceVersion = DataRowVersion.Current
+                    DataAdapter.InsertCommand.Parameters.Add("", NpgsqlTypes.NpgsqlDbType.Numeric, 0, "currency").SourceVersion = DataRowVersion.Current
+                    DataAdapter.InsertCommand.Parameters.Add("", NpgsqlTypes.NpgsqlDbType.Numeric, 0, "budgetcurrency").SourceVersion = DataRowVersion.Current
+                    DataAdapter.InsertCommand.Parameters.Add("", NpgsqlTypes.NpgsqlDbType.Integer, 0, "myyear").SourceVersion = DataRowVersion.Current
+                    DataAdapter.InsertCommand.Parameters.Add("", NpgsqlTypes.NpgsqlDbType.Integer, 0, "id").Direction = ParameterDirection.InputOutput
+                    DataAdapter.InsertCommand.CommandType = CommandType.StoredProcedure
+
+
+                    'Update
+                    sqlstr = "doc.sp_updatecurrency"
+                    DataAdapter.UpdateCommand = New NpgsqlCommand(sqlstr, conn)
+                    DataAdapter.UpdateCommand.Parameters.Add("", NpgsqlTypes.NpgsqlDbType.Integer, 0, "id").SourceVersion = DataRowVersion.Original
+                    DataAdapter.UpdateCommand.Parameters.Add("", NpgsqlTypes.NpgsqlDbType.Varchar, 0, "crcy").SourceVersion = DataRowVersion.Current
+                    DataAdapter.UpdateCommand.Parameters.Add("", NpgsqlTypes.NpgsqlDbType.Numeric, 0, "currency").SourceVersion = DataRowVersion.Current
+                    DataAdapter.UpdateCommand.Parameters.Add("", NpgsqlTypes.NpgsqlDbType.Numeric, 0, "budgetcurrency").SourceVersion = DataRowVersion.Current
+                    DataAdapter.UpdateCommand.Parameters.Add("", NpgsqlTypes.NpgsqlDbType.Integer, 0, "myyear").SourceVersion = DataRowVersion.Current
+                    DataAdapter.UpdateCommand.CommandType = CommandType.StoredProcedure
+
+
+                    sqlstr = "doc.sp_deletecurrency"
+                    DataAdapter.DeleteCommand = New NpgsqlCommand(sqlstr, conn)
+                    DataAdapter.DeleteCommand.Parameters.Add("", NpgsqlTypes.NpgsqlDbType.Integer, 0, "id").SourceVersion = DataRowVersion.Original
+                    DataAdapter.DeleteCommand.CommandType = CommandType.StoredProcedure
+
+                    mytransaction = conn.BeginTransaction
+                    DataAdapter.DeleteCommand.Transaction = mytransaction
+                    DataAdapter.UpdateCommand.Transaction = mytransaction
+                    DataAdapter.InsertCommand.Transaction = mytransaction
+
+                    mye.ra = DataAdapter.Update(mye.dataset.Tables(0))
+
+                    mytransaction.Commit()
+                Catch ex As Exception
+                    mytransaction.Rollback()
+                    mye.message = ex.Message
+                    Return False
+                End Try
+            End Using
+            myret = True
+        Catch ex As NpgsqlException
+            mye.message = ex.Message
+        End Try
+        Return myret
+    End Function
     Function PriceChangeSpecialProject(ByVal formMasterProduct As FormSpecialProjectMaster, ByVal mye As ContentBaseEventArgs) As Boolean
         Dim sqlstr As String = String.Empty
         Dim DataAdapter As New NpgsqlDataAdapter

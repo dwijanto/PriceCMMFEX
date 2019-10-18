@@ -157,22 +157,35 @@ Public Class FormMyTask3
         '       " left join standardcostad ad on ad.cmmf = std.cmmf and ad.validfrom = std.validfrom" &
         '       " left join  pls on pls.cmmf = c.cmmf and pls.vendorcode = v.vendorcode and pls.plant = dt.plant" &
         '       " left join  pr on pr.cmmf = pls.cmmf and pr.validfrom = pls.validfrom and pr.vendorcode = v.vendorcode and pr.plant = dt.plant;")
+        'sb.Append("with my as (select distinct pricechangehdid from sp_getmytasks5('" & myuser & "'::text,false) as tb(pricechangehdid bigint,creator character varying,creatorname character varying,validator1 character varying,validator1name character varying,validator2 character varying,validator2name character varying,validator3 character varying,validator3name character varying,pricetype character varying,description text,submitdate date,negotiateddate date,attachment text,status integer,statusname text,actiondate date,actionby character varying,reasonid integer))," &
+        '       " pls as ( SELECT foo.cmmf, foo.vendorcode, foo.plant, max(foo.validfrom) AS validfrom " &
+        '       " FROM ( select pd.cmmf,pl.vendorcode,pp.plant,pl.validfrom from my left join pricechangedtl pd  on pd.pricechangehdid = my.pricechangehdid left join pricelist pl on pl.cmmf = pd.cmmf LEFT JOIN priceplantscale pp ON pp.pricelistid = pl.pricelistid WHERE pl.scaleqty = pp.scale::double precision  ) foo GROUP BY foo.cmmf, foo.vendorcode, foo.plant ) ," &
+        '       " pr as (SELECT pl.pricelistid, pl.cmmf, pl.scaleqty, pp.amount, pp.perunit, pl.validfrom, pl.validto, pl.vendorcode, pl.currency, pp.plant, pp.id  from my left join pricechangedtl pd on pd.pricechangehdid = my.pricechangehdid	left join  pricelist pl on pl.cmmf = pd.cmmf  LEFT JOIN priceplantscale pp ON pp.pricelistid = pl.pricelistid WHERE pl.scaleqty = pp.scale::double precision )," &
+        '       " std as (select cmmf, max(validfrom) as validfrom from standardcostad group by cmmf)" &
+        '       " select distinct dt.*,c.commercialref,r.rangedesc,r.range,v.vendorname::character varying,v.shortname::character varying,materialdesc::character varying, pr.amount::numeric,pr.perunit::numeric,ad.planprice1,ad.per," &
+        '       " (getdelta(dt.price,dt.pricingunit,ad.planprice1,ad.per)) as deltastd, " &
+        '       " (getdelta(dt.price,dt.pricingunit,pr.amount::numeric,pr.perunit::numeric) ) as deltasap," &
+        '        " getalert(dt.price,dt.pricingunit,pr.amount::numeric,pr.perunit::numeric,ad.planprice1,ad.per) as alert,pr.validfrom,doc.getvendorcurr(dt.vendorcode,dt.validon) as crcy  " &
+        '       "   from pricechangedtl dt  " &
+        '       " left join cmmf c on c.cmmf = dt.cmmf  inner join my on my.pricechangehdid = dt.pricechangehdid left join vendor v on v.vendorcode = dt.vendorcode left join range r on r.rangeid = c.rangeid " &
+        '       " left join std on std.cmmf = c.cmmf" &
+        '       " left join standardcostad ad on ad.cmmf = std.cmmf and ad.validfrom = std.validfrom" &
+        '       " left join  pls on pls.cmmf = c.cmmf and pls.vendorcode = v.vendorcode and pls.plant = dt.plant" &
+        '       " left join  pr on pr.cmmf = pls.cmmf and pr.validfrom = pls.validfrom and pr.vendorcode = v.vendorcode and pr.plant = dt.plant;")
         sb.Append("with my as (select distinct pricechangehdid from sp_getmytasks5('" & myuser & "'::text,false) as tb(pricechangehdid bigint,creator character varying,creatorname character varying,validator1 character varying,validator1name character varying,validator2 character varying,validator2name character varying,validator3 character varying,validator3name character varying,pricetype character varying,description text,submitdate date,negotiateddate date,attachment text,status integer,statusname text,actiondate date,actionby character varying,reasonid integer))," &
                " pls as ( SELECT foo.cmmf, foo.vendorcode, foo.plant, max(foo.validfrom) AS validfrom " &
                " FROM ( select pd.cmmf,pl.vendorcode,pp.plant,pl.validfrom from my left join pricechangedtl pd  on pd.pricechangehdid = my.pricechangehdid left join pricelist pl on pl.cmmf = pd.cmmf LEFT JOIN priceplantscale pp ON pp.pricelistid = pl.pricelistid WHERE pl.scaleqty = pp.scale::double precision  ) foo GROUP BY foo.cmmf, foo.vendorcode, foo.plant ) ," &
                " pr as (SELECT pl.pricelistid, pl.cmmf, pl.scaleqty, pp.amount, pp.perunit, pl.validfrom, pl.validto, pl.vendorcode, pl.currency, pp.plant, pp.id  from my left join pricechangedtl pd on pd.pricechangehdid = my.pricechangehdid	left join  pricelist pl on pl.cmmf = pd.cmmf  LEFT JOIN priceplantscale pp ON pp.pricelistid = pl.pricelistid WHERE pl.scaleqty = pp.scale::double precision )," &
                " std as (select cmmf, max(validfrom) as validfrom from standardcostad group by cmmf)" &
-               " select distinct dt.*,c.commercialref,r.rangedesc,r.range,v.vendorname::character varying,v.shortname::character varying,materialdesc::character varying, pr.amount::numeric,pr.perunit::numeric,ad.planprice1,ad.per," &
-               " (getdelta(dt.price,dt.pricingunit,ad.planprice1,ad.per)) as deltastd, " &
-               " (getdelta(dt.price,dt.pricingunit,pr.amount::numeric,pr.perunit::numeric) ) as deltasap," &
-                " getalert(dt.price,dt.pricingunit,pr.amount::numeric,pr.perunit::numeric,ad.planprice1,ad.per) as alert,pr.validfrom,doc.getvendorcurr(dt.vendorcode,dt.validon) as crcy  " &
+               " select distinct dt.*,c.commercialref,r.rangedesc,r.range,v.vendorname::character varying,v.shortname::character varying,materialdesc::character varying," &
+               " (getpriceplantinfo('',dt.cmmf,dt.vendorcode,dt.plant,dt.validon,dt.price,dt.pricingunit,ad.planprice1,ad.per)).* " &
+                " ,doc.getvendorcurr(dt.vendorcode,dt.validon) as crcy  " &
                "   from pricechangedtl dt  " &
                " left join cmmf c on c.cmmf = dt.cmmf  inner join my on my.pricechangehdid = dt.pricechangehdid left join vendor v on v.vendorcode = dt.vendorcode left join range r on r.rangeid = c.rangeid " &
                " left join std on std.cmmf = c.cmmf" &
                " left join standardcostad ad on ad.cmmf = std.cmmf and ad.validfrom = std.validfrom" &
                " left join  pls on pls.cmmf = c.cmmf and pls.vendorcode = v.vendorcode and pls.plant = dt.plant" &
                " left join  pr on pr.cmmf = pls.cmmf and pr.validfrom = pls.validfrom and pr.vendorcode = v.vendorcode and pr.plant = dt.plant;")
-
         sb.Append("select 5;")
         sb.Append("select dt.paramname from paramdt dt left join paramhd ph on ph.paramhdid = dt.paramhdid where ph.paramname = 'PriceType' order by paramdtid;")
         sb.Append("select 2;")

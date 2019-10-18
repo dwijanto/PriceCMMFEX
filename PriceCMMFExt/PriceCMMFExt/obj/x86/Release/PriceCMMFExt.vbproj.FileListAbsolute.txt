@@ -148,3 +148,5 @@ C:\Users\dlie\Documents\GitHub\PriceCMMFEX\PriceCMMFExt\PriceCMMFExt\obj\x86\Rel
 C:\Users\dlie\Documents\GitHub\PriceCMMFEX\PriceCMMFExt\PriceCMMFExt\obj\x86\Release\PriceCMMFExt.exe
 C:\Users\dlie\Documents\GitHub\PriceCMMFEX\PriceCMMFExt\PriceCMMFExt\obj\x86\Release\PriceCMMFExt.xml
 C:\Users\dlie\Documents\GitHub\PriceCMMFEX\PriceCMMFExt\PriceCMMFExt\obj\x86\Release\PriceCMMFExt.pdb
+C:\Users\dlie\Documents\GitHub\PriceCMMFEX\PriceCMMFExt\PriceCMMFExt\obj\x86\Release\PriceCMMFExt.DialogInputCurrency.resources
+C:\Users\dlie\Documents\GitHub\PriceCMMFEX\PriceCMMFExt\PriceCMMFExt\obj\x86\Release\PriceCMMFExt.FormCurrency.resources
