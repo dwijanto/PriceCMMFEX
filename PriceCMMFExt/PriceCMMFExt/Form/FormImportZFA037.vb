@@ -238,193 +238,198 @@ Public Class FormImportZFA037
                         'find the record in existing table.
                         ProgressReport(7, i + 1 & "," & mylist.Count)
                         myrecord = mylist(i)
-                        If i = 213740 Then
+                        If i = 352461 Then
                             Debug.Print("hello")
                         End If
                         If i >= 0 Then
-                            Dim result As DataRow
-                            'Find Vendor if not avail then create
-
-                            Dim pkey1(0) As Object
-                            pkey1(0) = myrecord(2)
-                            Dim spmid = ""
-                            Dim ssmidpl = ""
-                            result = DS.Tables(1).Rows.Find(pkey1)
-                            If IsNothing(result) Then
-                                'create
-                                'vendorcode,vendorname,officerid
-                                Dim dr As DataRow = DS.Tables(1).NewRow
-                                dr.Item(0) = myrecord(2)
-                                dr.Item(1) = myrecord(3)
-                                dr.Item(2) = myrecord(6)
-                                DS.Tables(1).Rows.Add(dr)
-
-                                VendorSB.Append(myrecord(2) & vbTab &
-                                                validstr(myrecord(3)) & vbTab &
-                                                validlong(myrecord(6)) & vbCrLf)
+                            If Not IsNumeric(myrecord(4)) Then
+                                'skip cmmf with characters
+                                Debug.Print("skip")
                             Else
-                                'update
-                                If Not IsDBNull(result.Item("pmid")) Then
-                                    spmid = result.Item("pmid")
-                                End If
-                                If Not IsDBNull(result.Item("ssmidpl")) Then
-                                    ssmidpl = result.Item("ssmidpl")
-                                End If
+                                Dim result As DataRow
+                                'Find Vendor if not avail then create
 
-                                Dim update As Boolean = False
-                                If result.Item("vendorname").ToString <> myrecord(3) Then
-                                    If myrecord(3) <> "Ya Horng Electronic Co., Ltd." Then
-                                        ''Debug.Print("ya horng")
-                                        ''Else
-                                        'result.Item("vendorname") = myrecord(3)
-                                        'update = True
+                                Dim pkey1(0) As Object
+                                pkey1(0) = myrecord(2)
+                                Dim spmid = ""
+                                Dim ssmidpl = ""
+                                result = DS.Tables(1).Rows.Find(pkey1)
+                                If IsNothing(result) Then
+                                    'create
+                                    'vendorcode,vendorname,officerid
+                                    Dim dr As DataRow = DS.Tables(1).NewRow
+                                    dr.Item(0) = myrecord(2)
+                                    dr.Item(1) = myrecord(3)
+                                    dr.Item(2) = myrecord(6)
+                                    DS.Tables(1).Rows.Add(dr)
+
+                                    VendorSB.Append(myrecord(2) & vbTab &
+                                                    validstr(myrecord(3)) & vbTab &
+                                                    validlong(myrecord(6)) & vbCrLf)
+                                Else
+                                    'update
+                                    If Not IsDBNull(result.Item("pmid")) Then
+                                        spmid = result.Item("pmid")
+                                    End If
+                                    If Not IsDBNull(result.Item("ssmidpl")) Then
+                                        ssmidpl = result.Item("ssmidpl")
                                     End If
 
-                                End If
-                                If IsDBNull(result.Item("officerid")) Then
-                                    result.Item("officerid") = myrecord(6)
-                                    update = True
-                                Else
-                                    If result.Item("officerid") <> myrecord(6) Then
+                                    Dim update As Boolean = False
+                                    If result.Item("vendorname").ToString <> myrecord(3) Then
+                                        If myrecord(3) <> "Ya Horng Electronic Co., Ltd." Then
+                                            ''Debug.Print("ya horng")
+                                            ''Else
+                                            'result.Item("vendorname") = myrecord(3)
+                                            'update = True
+                                        End If
+
+                                    End If
+                                    If IsDBNull(result.Item("officerid")) Then
                                         result.Item("officerid") = myrecord(6)
                                         update = True
-                                    End If
-                                End If
-
-
-                                If update Then
-                                    If VendorUpdateSB.Length > 0 Then
-                                        VendorUpdateSB.Append(",")
-                                    End If
-                                    VendorUpdateSB.Append(String.Format("['{0}'::character varying,'{1}'::character varying,'{2}'::character varying]", myrecord(2), validstr(myrecord(3)), validlong(myrecord(6))))
-                                End If
-
-                            End If
-
-
-                            'Find CMMF 2
-                            Dim pkey2(0) As Object
-                            pkey2(0) = myrecord(4)
-
-                            result = DS.Tables(2).Rows.Find(pkey2)
-                            If IsNothing(result) Then
-                                Dim dr As DataRow = DS.Tables(2).NewRow
-                                dr.Item(0) = myrecord(4)
-                                DS.Tables(2).Rows.Add(dr)
-                                'cmmf,materialdesc,vendorcode,plnt 
-                                '** this is not true anymore
-                                'cmmf -> vendorcode -> plnt  not one to one relations
-                                'only for initial value purpose
-                                'the correct relation for cmmf -> vendorcode is table pricelist
-                                'cmmf->plant priceplant
-                                CMMFSB.Append(myrecord(4) & vbTab &
-                                                    validstr(myrecord(5)) & vbTab &
-                                                    validreal(myrecord(2)) & vbTab &
-                                                    validint(myrecord(1)) & vbCrLf)
-                            End If
-
-                            'Find PCCMMF 3
-                            Dim pkey3(0) As Object
-                            pkey3(0) = myrecord(4)
-
-                            result = DS.Tables(3).Rows.Find(pkey3)
-                            If IsNothing(result) Then
-                                Dim dr As DataRow = DS.Tables(3).NewRow
-                                dr.Item(0) = myrecord(4)
-
-                                Dim myrangeid = "Null"
-                                If myrecord(1) = "3720" Then
-                                    'Find Project with ssmid and pmid
-                                    'if not avail then create pcrange,project
-                                    If Not (ssmidpl = "" Or spmid = "") Then 'New ss
-                                        Dim pkey4(1) As Object
-                                        pkey4(0) = ssmidpl
-                                        pkey4(1) = spmid
-                                        result = DS.Tables(4).Rows.Find(pkey4)
-                                        If IsNothing(result) Then
-                                            pcprojectSeq = pcprojectSeq + 1
-                                            pcrangeSeq = pcrangeSeq + 1
-                                            pcprojectId = pcprojectSeq
-                                            pcrangeId = pcrangeSeq
-                                            'create pcproject for ssm an spm
-                                            ProjectSB.Append(pcprojectId & vbTab &
-                                                             ssmidpl & vbTab &
-                                                             spmid & vbCrLf)
-
-
-
-                                            'create pcrange for new pcproject
-                                            PCRangeSB.Append(pcrangeId & vbTab &
-                                                             pcprojectId & vbCrLf)
-                                            'create table(5)
-                                            Dim dr1 As DataRow = DS.Tables(4).NewRow
-                                            dr1.Item("ssmid") = ssmidpl
-                                            dr1.Item("spmid") = spmid
-                                            dr1.Item("pcprojectid") = pcprojectId
-                                            dr1.Item("pcrangeid") = pcrangeId
-                                            myrangeid = pcrangeId
-                                            'pcprojectSeq = pcprojectSeq + 1
-                                            'pcrangeSeq = pcrangeSeq + 1
-                                            DS.Tables(4).Rows.Add(dr1)
-                                        Else
-                                            myrangeid = result.Item("pcrangeid")
+                                    Else
+                                        If result.Item("officerid") <> myrecord(6) Then
+                                            result.Item("officerid") = myrecord(6)
+                                            update = True
                                         End If
                                     End If
+
+
+                                    If update Then
+                                        If VendorUpdateSB.Length > 0 Then
+                                            VendorUpdateSB.Append(",")
+                                        End If
+                                        VendorUpdateSB.Append(String.Format("['{0}'::character varying,'{1}'::character varying,'{2}'::character varying]", myrecord(2), validstr(myrecord(3)), validlong(myrecord(6))))
+                                    End If
+
                                 End If
 
 
-                                DS.Tables(3).Rows.Add(dr)
-                                PCCMMFSB.Append(myrecord(4) & vbTab &
-                                              myrangeid & vbCrLf)
+                                'Find CMMF 2
+                                Dim pkey2(0) As Object
+                                pkey2(0) = myrecord(4)
 
-                            End If
+                                result = DS.Tables(2).Rows.Find(pkey2)
+                                If IsNothing(result) Then
+                                    Dim dr As DataRow = DS.Tables(2).NewRow
+                                    dr.Item(0) = myrecord(4)
+                                    DS.Tables(2).Rows.Add(dr)
+                                    'cmmf,materialdesc,vendorcode,plnt 
+                                    '** this is not true anymore
+                                    'cmmf -> vendorcode -> plnt  not one to one relations
+                                    'only for initial value purpose
+                                    'the correct relation for cmmf -> vendorcode is table pricelist
+                                    'cmmf->plant priceplant
+                                    CMMFSB.Append(myrecord(4) & vbTab &
+                                                        validstr(myrecord(5)) & vbTab &
+                                                        validreal(myrecord(2)) & vbTab &
+                                                        validint(myrecord(1)) & vbCrLf)
+                                End If
 
-                            'Find Price List if not avail then add to PricelistSB
-                            If pricelistid = 210690 Then
-                                Debug.Print("hello")
-                            End If
+                                'Find PCCMMF 3
+                                Dim pkey3(0) As Object
+                                pkey3(0) = myrecord(4)
 
-                            Dim pkey0(3) As Object
-                            pkey0(0) = myrecord(4) 'cmmf
-                            pkey0(1) = myrecord(2) 'vendor
-                            pkey0(2) = myrecord(14) 'valid from
-                            pkey0(3) = myrecord(15) 'valid to
+                                result = DS.Tables(3).Rows.Find(pkey3)
+                                If IsNothing(result) Then
+                                    Dim dr As DataRow = DS.Tables(3).NewRow
+                                    dr.Item(0) = myrecord(4)
 
-                            result = DS.Tables(0).Rows.Find(pkey0)
-                            If IsNothing(result) Then
-                                Dim dr As DataRow = DS.Tables(0).NewRow
-                                pricelistid = pricelistid + 1
-                                PriceListIdTemp = pricelistid
-                                dr.Item(0) = myrecord(4)
-                                dr.Item(1) = myrecord(2)
-                                dr.Item(2) = myrecord(14)
-                                dr.Item(3) = myrecord(15)
-                                dr.Item(4) = pricelistid
-                                DS.Tables(0).Rows.Add(dr)
+                                    Dim myrangeid = "Null"
+                                    If myrecord(1) = "3720" Then
+                                        'Find Project with ssmid and pmid
+                                        'if not avail then create pcrange,project
+                                        If Not (ssmidpl = "" Or spmid = "") Then 'New ss
+                                            Dim pkey4(1) As Object
+                                            pkey4(0) = ssmidpl
+                                            pkey4(1) = spmid
+                                            result = DS.Tables(4).Rows.Find(pkey4)
+                                            If IsNothing(result) Then
+                                                pcprojectSeq = pcprojectSeq + 1
+                                                pcrangeSeq = pcrangeSeq + 1
+                                                pcprojectId = pcprojectSeq
+                                                pcrangeId = pcrangeSeq
+                                                'create pcproject for ssm an spm
+                                                ProjectSB.Append(pcprojectId & vbTab &
+                                                                 ssmidpl & vbTab &
+                                                                 spmid & vbCrLf)
 
-                                'cmmf,scaleqty,amount,perunit,validfrom,validto,vendorcode,currency)    
-                                PricelistSB.Append(myrecord(4) & vbTab &
-                                                    validreal(myrecord(9)) & vbTab &
-                                                    validreal(myrecord(10)) & vbTab &
-                                                    validint(myrecord(12)) & vbTab &
-                                                    dateformatdotyyyymmdd(myrecord(14)) & vbTab &
-                                                    dateformatdotyyyymmdd(myrecord(15)) & vbTab &
-                                                    validint(myrecord(2)) & vbTab &
-                                                    validstr(myrecord(11)) & vbTab &
-                                                    validstr(myrecord(13)) & vbCrLf)
-                                priceplntSB.Append(pricelistid & vbTab &
-                                                   myrecord(1) & vbCrLf)
-                            Else
-                                PriceListIdTemp = result.Item("pricelistid")
-                                'priceplntSB.Append(PriceListIdTemp & vbTab &
-                                '                  myrecord(1) & vbCrLf)
-                            End If
 
-                            priceplntScaleSB.Append(PriceListIdTemp & vbTab &
-                                                        myrecord(1) & vbTab &
-                                                        validreal(myrecord(12)) & vbTab &
+
+                                                'create pcrange for new pcproject
+                                                PCRangeSB.Append(pcrangeId & vbTab &
+                                                                 pcprojectId & vbCrLf)
+                                                'create table(5)
+                                                Dim dr1 As DataRow = DS.Tables(4).NewRow
+                                                dr1.Item("ssmid") = ssmidpl
+                                                dr1.Item("spmid") = spmid
+                                                dr1.Item("pcprojectid") = pcprojectId
+                                                dr1.Item("pcrangeid") = pcrangeId
+                                                myrangeid = pcrangeId
+                                                'pcprojectSeq = pcprojectSeq + 1
+                                                'pcrangeSeq = pcrangeSeq + 1
+                                                DS.Tables(4).Rows.Add(dr1)
+                                            Else
+                                                myrangeid = result.Item("pcrangeid")
+                                            End If
+                                        End If
+                                    End If
+
+
+                                    DS.Tables(3).Rows.Add(dr)
+                                    PCCMMFSB.Append(myrecord(4) & vbTab &
+                                                  myrangeid & vbCrLf)
+
+                                End If
+
+                                'Find Price List if not avail then add to PricelistSB
+                                If pricelistid = 210690 Then
+                                    Debug.Print("hello")
+                                End If
+
+                                Dim pkey0(3) As Object
+                                pkey0(0) = myrecord(4) 'cmmf
+                                pkey0(1) = myrecord(2) 'vendor
+                                pkey0(2) = myrecord(14) 'valid from
+                                pkey0(3) = myrecord(15) 'valid to
+
+                                result = DS.Tables(0).Rows.Find(pkey0)
+                                If IsNothing(result) Then
+                                    Dim dr As DataRow = DS.Tables(0).NewRow
+                                    pricelistid = pricelistid + 1
+                                    PriceListIdTemp = pricelistid
+                                    dr.Item(0) = myrecord(4)
+                                    dr.Item(1) = myrecord(2)
+                                    dr.Item(2) = myrecord(14)
+                                    dr.Item(3) = myrecord(15)
+                                    dr.Item(4) = pricelistid
+                                    DS.Tables(0).Rows.Add(dr)
+
+                                    'cmmf,scaleqty,amount,perunit,validfrom,validto,vendorcode,currency)    
+                                    PricelistSB.Append(myrecord(4) & vbTab &
+                                                        validreal(myrecord(9)) & vbTab &
                                                         validreal(myrecord(10)) & vbTab &
-                                                        validreal(myrecord(9)) & vbCrLf)
+                                                        validint(myrecord(12)) & vbTab &
+                                                        dateformatdotyyyymmdd(myrecord(14)) & vbTab &
+                                                        dateformatdotyyyymmdd(myrecord(15)) & vbTab &
+                                                        validint(myrecord(2)) & vbTab &
+                                                        validstr(myrecord(11)) & vbTab &
+                                                        validstr(myrecord(13)) & vbCrLf)
+                                    priceplntSB.Append(pricelistid & vbTab &
+                                                       myrecord(1) & vbCrLf)
+                                Else
+                                    PriceListIdTemp = result.Item("pricelistid")
+                                    'priceplntSB.Append(PriceListIdTemp & vbTab &
+                                    '                  myrecord(1) & vbCrLf)
+                                End If
+
+                                priceplntScaleSB.Append(PriceListIdTemp & vbTab &
+                                                            myrecord(1) & vbTab &
+                                                            validreal(myrecord(12)) & vbTab &
+                                                            validreal(myrecord(10)) & vbTab &
+                                                            validreal(myrecord(9)) & vbCrLf)
+                            End If
                         End If
                     Next
                 Catch ex As Exception

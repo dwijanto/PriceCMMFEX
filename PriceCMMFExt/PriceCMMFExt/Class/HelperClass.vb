@@ -76,7 +76,6 @@ Public Class HelperClass
             _UserId = principalIdentity.Name
             _userInfo = New UserInfo
 
-
             getDataAD(_UserId)
         End If
     End Sub
