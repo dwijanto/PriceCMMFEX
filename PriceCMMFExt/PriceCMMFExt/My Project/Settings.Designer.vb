@@ -68,7 +68,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("host=localhost;port=5432;database=LogisticDb20150120;CommandTimeout=1000;TimeOut="& _ 
+         Global.System.Configuration.DefaultSettingValueAttribute("host=localhost;port=5433;database=LogisticDb20190909;CommandTimeout=1000;TimeOut="& _ 
             "1000;")>  _
         Public Property conTest() As String
             Get

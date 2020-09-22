@@ -26,6 +26,7 @@ Public Class ReportAVPISaving
     Dim cttbname As String
     Dim q1fieldname As String
     Dim q2fieldname As String
+    Dim GenSerial As String
 
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
         If myQueryThread.IsAlive Then
@@ -42,6 +43,16 @@ Public Class ReportAVPISaving
             startdate = DateTimePicker1.Value.Date
             enddate = DateTimePicker2.Value.Date
 
+            'modify the dynamic field
+
+            ctfieldname = String.Format("productivity{0}::numeric,productivity{1}::numeric,VE::numeric", Year(startdate) - 1, Year(startdate))
+            cttbname = String.Format("productivity{0} numeric,productivity{1} numeric,VE numeric", Year(startdate) - 1, Year(startdate))
+            q1fieldname = String.Format("s.productivity{0},q1.qty * s.productivity{0} as productivity{0}amount,s.productivity{1},q1.qty * s.productivity{1} as productivity{1}amount,s.VE,q1.qty * s.VE as VEamount", Year(startdate) - 1, Year(startdate))
+            q2fieldname = String.Format("s.productivity{0},q2.qty * s.productivity{0} as productivity{0}amount,s.productivity{1},q2.qty * s.productivity{1} as productivity{1}amount,s.VE,q2.qty * s.VE as VEamount", Year(startdate) - 1, Year(startdate))
+
+            ctfieldname = "'" & ctfieldname & "'"
+            cttbname = "'" & cttbname & "'"
+            GenSerial = String.Format("'''''productivity{0}'''',''''productivity{1}'''',''''VE'''''", Year(startdate) - 1, Year(startdate))
 
             ProgressReport(5, "")
             Dim DirectoryBrowser As FolderBrowserDialog = New FolderBrowserDialog
@@ -67,16 +78,14 @@ Public Class ReportAVPISaving
     Sub DoQuery()
 
         Dim sqlstr = "select miropostingdate from miro order by miropostingdate desc limit 1;" &
-                     "select vendorname::character varying from orderlinemembers ol" &
-                     " left join vendor v on v.vendorcode = ol.customercode" &
-                     "  where ol.orderlineid = 15 order by vendorname;" &
-                     "select savinglookupname from savinglookup where parentid = 0" &
-                     " order by myorder "
+                     "select vendorname::character varying from orderlinemembers ol left join vendor v on v.vendorcode = ol.customercode where ol.orderlineid = 15 order by vendorname;" &
+                     "select savinglookupname from savinglookup where parentid = 0 order by myorder;" &
+                     "select userid from programlocking where progname = 'FormImportZZ0035';"
         'Dim myresult As Date
         Dim mymessage As String = String.Empty
  
         If DbAdapter1.TbgetDataSet(sqlstr, ds, mymessage) Then
-            ProgressReport(6, String.Format("{0:dd-MMM-yyyy}", ds.Tables(0).Rows(0).Item(0)))
+            ProgressReport(6, String.Format("{0:dd-MMM-yyyy} by {1}", DS.Tables(0).Rows(0).Item(0), DS.Tables(3).Rows(0).Item(0).ToString))
             VendorList = ""
             For i = 0 To ds.Tables(1).Rows.Count - 1
                 VendorList = VendorList + IIf(VendorList = "", "", ",") + ds.Tables(1).Rows(i).Item(0).ToString
@@ -88,6 +97,9 @@ Public Class ReportAVPISaving
                 q1fieldname = q1fieldname & IIf(q1fieldname = "", "", ",") & "s." & DS.Tables(2).Rows(i).Item(0).ToString & ",q1.qty * s." & DS.Tables(2).Rows(i).Item(0).ToString & " as " & DS.Tables(2).Rows(i).Item(0).ToString & "amount"
                 q2fieldname = q2fieldname & IIf(q2fieldname = "", "", ",") & "s." & DS.Tables(2).Rows(i).Item(0).ToString & ",q2.qty * s." & DS.Tables(2).Rows(i).Item(0).ToString & " as " & DS.Tables(2).Rows(i).Item(0).ToString & "amount"
             Next
+
+            'override of new 
+
             ctfieldname = "'" & ctfieldname & "'"
             cttbname = "'" & cttbname & "'"
             'ctfieldname = "'ve::numeric,lean::numeric'"
@@ -708,25 +720,103 @@ Public Class ReportAVPISaving
             '                        " q2.qty * ""averpricey-1fixedcurr"" end as ""towaverpricey-1fixedcurr"", case when ""lastpricey-1fixedcurr"" isnull then " &
             '                        " q2.qty * ""initialprice-fixedcurr"" else q2.qty * ""lastpricey-1fixedcurr"" end as ""towlastpricey-1fixedcurr""," & q2fieldname & " from q2" &
             '                        " left join s on s.cmmf = q2.cmmf and s.postingdate = q2.miropostingdate;"
+            'Dim withstrsql = "with " &
+            '              " lastcurr as (select distinct first_value(crcy) over (partition by m.vendorcode,pd.cmmf order by m.miropostingdate desc) as lastcurr," &
+            '              " pd.cmmf,m.vendorcode from miro m left join pomiro pm on m.miroid = pm.miroid left join podtl pd on pd.podtlid = pm.podtlid" &
+            '              " where date_part('Year',m.miropostingdate) =  " & Year(sr.startdate) - 1 & "),initcurr as (select distinct first_value(crcy) over (partition by m.vendorcode,pd.cmmf order by m.miropostingdate asc ) as initialcurr," &
+            '              "pd.cmmf,m.vendorcode from miro m left join pomiro pm on m.miroid = pm.miroid left join podtl pd on pd.podtlid = pm.podtlid where date_part('Year',m.miropostingdate) = " & Year(sr.startdate) & ")," &
+            '              " s as (select * from savingct01(" & mydate1 & "::date," & mydate2 & "::date," & ctfieldname & "," & cttbname & ")as " &
+            '                " (cmmf bigint,postingdate date," & Replace(cttbname, "'", "") & "))," &
+            '                "q1 as(SELECT ph.pohd, pd.polineno, ph.pono, pd.cmmf, mm.rri,mm.materialdesc, ph.purchasinggroup, m.vendorcode, v.vendorname,v.shortname,e.termsofpayment,  m.supplierinvoicenum, m.mironumber, m.miropostingdate, pm.crcy as originalcurrency, getpocurramountdc(ph.pohd,pd.polineno,pm.crcy,pm.amount,pm.qty,m.miropostingdate) as amount,getpocurramountdc(ph.pohd,pd.polineno,pm.crcy,pm.amount,pm.qty,m.miropostingdate) -( validnum(agv.value) / getexrate(ph.pohd,pd.polineno)::numeric(18,4) * pm.qty) as newamount ,  validstdprice(pg.purchasinggroup,getpocurramountdc(ph.pohd,pd.polineno,pm.crcy,pm.amount,pm.qty,m.miropostingdate) -( validnum(agv.value) / getexrate(ph.pohd,pd.polineno)::numeric(18,4) * pm.qty)) as newamountfp,validmould(pg.purchasinggroup,getpocurramountdc(ph.pohd,pd.polineno,pm.crcy,pm.amount,pm.qty,m.miropostingdate) -( validnum(agv.value) / getexrate(ph.pohd,pd.polineno)::numeric(18,4) * pm.qty)) as newamountwomoulds, pm.qty, pd.oun, pm.pomiroid, mm.familylv1 as comfam, f.familyname, validvpi(s.pi_vpi,pg.purchasinggroup) AS vpi, validvpi(s.pi_sbuname,pg.purchasinggroup) as sbuname,validvpi(s.pi_sbu,pg.purchasinggroup) as sbu, poplant.plant, sct.category, mm.cmmftype, (getvalidpricesap(pd.cmmf,m.vendorcode,m.miropostingdate) / getexrate(ph.pohd,pd.polineno))::numeric(18,4) AS validpricesap, c.eol, validstdprice(pg.purchasinggroup,getstdcost(mm.cmmf,m.miropostingdate)) AS stdprice," & _
+            '                      " sdpo.shiptoparty, cust.customername AS shiptopartyname," &
+            '                      " case getgroupsbu(odm.customercode,odm.customername,gs.groupsbuname,ph.purchasinggroup,mm.familylv1) when 'NON GROUP SUPPLIERS (SBU)' then doc.validatespmpm(mus.username,mu2.username) when 'COMPONENT' then doc.validatespmpm(musvp.username,mu2.username) when 'MOULD' then doc.validatespmpm(musvp.username,mu2.username)  when 'SPARE PART' then doc.validatespmpm(musvp.username,mu2.username) end as spm," &
+            '                      " case getgroupsbu(odm.customercode,odm.customername,gs.groupsbuname,ph.purchasinggroup,mm.familylv1) when 'NON GROUP SUPPLIERS (SBU)' then doc.validatespmpm(mu.username,mu1.username)  when 'COMPONENT' then doc.validatespmpm(muvp.username,mu1.username)  when 'MOULD' then doc.validatespmpm(muvp.username,mu1.username)   when 'SPARE PART' then doc.validatespmpm(muvp.username,mu1.username) end as pm," &
+            '                      " validnum(agv.value) / getexrate(ph.pohd,pd.polineno)::numeric(18,4) as amort, ((getpocurramountdc(ph.pohd,pd.polineno,pm.crcy,pm.amount,pm.qty,m.miropostingdate) / pm.qty) - validnum(agv.value) / getexrate(ph.pohd,pd.polineno)::numeric(18,4) - validstdprice(pg.purchasinggroup, getstdcost(mm.cmmf,m.miropostingdate))) * -1 as variance,(((getpocurramountdc(ph.pohd,pd.polineno,pm.crcy,pm.amount,pm.qty,m.miropostingdate) / pm.qty )- validnum(agv.value) / getexrate(ph.pohd,pd.polineno)::numeric(18,4) - validstdprice(pg.purchasinggroup, getstdcost(mm.cmmf,m.miropostingdate))) * -1) * pm.qty as ""tovariance"" , cvp.averprice::numeric as ""averpricey-1"",(getlkpamount(pd.cmmf,m.vendorcode,date_part('year',m.miropostingdate)::integer,cvp.lastprice)::numeric - cvp.agv2::numeric)  as ""lastpricey-1""," &
+            '                      " getinitialpriceamount(pd.cmmf,m.vendorcode,date_part('year',m.miropostingdate)::integer,cvp1.initialprice) - (cvp1.agv1::numeric / getexrate(ph.pohd,pd.polineno)::numeric(18,4))as ""initialprice""," & _
+            '                      " case when cvp.averprice is null then (getinitialpriceamount(pd.cmmf,m.vendorcode,date_part('year',m.miropostingdate)::integer,cvp1.initialprice)::numeric - (cvp1.agv1::numeric/getexrate(ph.pohd,pd.polineno)::numeric(18,4))) * qty::numeric Else cvp.averprice::numeric * qty::numeric End as ""towavpy-1"", case when cvp.lastprice is null then  (getinitialpriceamount(pd.cmmf,m.vendorcode,date_part('year',m.miropostingdate)::integer,cvp1.initialprice)::numeric - cvp1.agv1::numeric) * qty::numeric Else (getlkpamount(pd.cmmf,m.vendorcode,date_part('year',m.miropostingdate)::integer,cvp.lastprice)::numeric - cvp.agv2::numeric) * qty::numeric End as ""towlkpy-1"", qty::numeric * validstdprice(pg.purchasinggroup,(getstdcost(mm.cmmf,m.miropostingdate))) as towstd, " &
+            '                      " getgroupsbu(odm.customercode,odm.customername,gs.groupsbuname,ph.purchasinggroup,mm.familylv1) as groupsbu," &
+            '                      " validgroupact(gs1.groupsbuname,pmo.officersebname) as groupact,pt.days as avrpayt,pt.days::numeric * (getpocurramountdc(ph.pohd,pd.polineno,pm.crcy,pm.amount,pm.qty,m.miropostingdate)::numeric -( validnum(agv.value)::numeric / getexrate(ph.pohd,pd.polineno)::numeric(18,4) * pm.qty::numeric)) as amtwpayt,r.range,r.rangedesc,c.modelcode,s.sbuname as sbusap,pm.amount as originalamount," &
+            '                      " cvp.averpricefixcurr as ""averpricey-1fixedcurr"" ," &
+            '                      " case when fc.crcy isnull then cvp.lastprice - cvp.agv2 else  (cvp.lastprice - cvp.agv2) / fc.currency   end as ""lastpricey-1fixedcurr""," &
+            '                      " case when fc1.crcy isnull then cvp1.initialprice - cvp1.agv1  else  (cvp1.initialprice - cvp1.agv1)  / fc1.currency   end as ""initialprice-fixedcurr"",so.soldtoparty,cust2.customername as soldtopartyname" &
+            '                      " FROM pomiro pm" & _
+            '                      " LEFT JOIN miro m ON m.miroid = pm.miroid" & _
+            '                      " LEFT JOIN podtl pd ON pd.podtlid = pm.podtlid" & _
+            '                      " Left join ekko e on e.po = pd.pohd LEFT JOIN pohd ph ON ph.pohd = pd.pohd" &
+            '                      " left join poplant on poplant.po = ph.pohd" &
+            '                      " LEFT JOIN cmmf c ON c.cmmf = pd.cmmf LEFT JOIN materialmaster mm ON mm.cmmf = pd.cmmf  LEFT JOIN family f ON f.familyid = mm.familylv1 left join range r on r.range = mm.range" & _
+            '                      " LEFT JOIN activity ac ON ac.activitycode = mm.rri" &
+            '                      " LEFT JOIN sbu vpi ON vpi.sbuid = ac.sbuidvpi  LEFT JOIN sbu ON sbu.sbuid = ac.sbuidlg left join sbu sbu1 on sbu1.sbuid = ac.sbuid Left join sbusap s on s.sbuid = mm.sbu" & _
+            '                      " LEFT JOIN paymentterm pt on pt.payt = e.termsofpayment" & _
+            '                      " LEFT JOIN vendor v ON v.vendorcode = m.vendorcode" & _
+            '                      " left join supplierspanel spl on spl.vendorcode = v.vendorcode" & _
+            '                      " Left join supplierscategory sct on sct.supplierscategoryid = spl.supplierscategoryid" & _
+            '                      " Left JOIN officer of on of.officerid = v.officerid left join officerseb pmo on pmo.ofsebid = v.pmid  " & _
+            '                      " left join purchasinggroup pg on pg.purchasinggroup = ph.purchasinggroup " &
+            '                      " left join doc.vendorfamilyex vfex on vfex.vendorcode = m.vendorcode and vfex.familyid = f.familyid" &
+            '                      " left join officerseb o on o.ofsebid = vfex.pmid 	left join masteruser mu on mu.id = o.muid	left join officerseb spm on spm.ofsebid = o.parent	left join masteruser mus on mus.id = spm.muid	left join doc.vendorpm vp on vp.vendorcode = v.vendorcode" &
+            '                      " left join officerseb ovp on ovp.ofsebid = vp.pmid	left join masteruser muvp on muvp.id = ovp.muid	left join officerseb spmvp on spmvp.ofsebid = ovp.parent	left join masteruser musvp on musvp.id = spmvp.muid" &
+            '                      " LEFT JOIN doc.viewvendorfamilypm vfp ON vfp.vendorcode = v.vendorcode LEFT JOIN officerseb os ON os.ofsebid = vfp.pmid LEFT JOIN masteruser mu1 ON mu1.id = os.muid LEFT JOIN officerseb o1 ON o1.ofsebid = os.parent LEFT JOIN masteruser mu2 ON mu2.id = o1.muid" &
+            '                      " left join groupsbu gs on gs.groupsbuid = pg.groupsbuidpg left join orderlinemembers odm on odm.orderlineid = 15 and odm.customercode = m.vendorcode left join vendor vs on vs.vendorcode = odm.customercode" & _
+            '                      " left join groupsbu gs1 on gs1.groupsbuid = pg.groupact" & _
+            '                      " LEFT JOIN cxsebpodtl sdpo ON sdpo.sebasiapono = ph.pohd AND sdpo.polineno = pd.polineno" &
+            '                      " left join cxrelsalesdocpo rel on rel.cxsebpodtlid = sdpo.cxsebpodtlid" &
+            '                      " left join cxsalesorderdtl sa on sa.cxsalesorderdtlid = rel.cxsalesorderdtlid " &
+            '                      " left join cxsalesorder so on so.sebasiasalesorder = sa.sebasiasalesorder" &
+            '                      " LEFT JOIN customer cust2 ON cust2.customercode = so.soldtoparty" &
+            '                      " LEFT JOIN customer cust ON cust.customercode = sdpo.shiptoparty  left join agreementtx agtx on agtx.material = pd.cmmf and agtx.postingdate = m.miropostingdate and agtx.status left join agvalue agv on agv.agreement = agtx.agreement  " & _
+            '                      " left join cmmfvendorprice cvp on cvp.cmmf = pd.cmmf and cvp.vendorcode = m.vendorcode and cvp.myyear = " & Year(sr.startdate) - 1 &
+            '                      " left join cmmfvendorprice cvp1 on cvp1.cmmf = pd.cmmf and cvp1.vendorcode = m.vendorcode and cvp1.myyear = " & Year(sr.startdate) &
+            '                      " left join lastcurr lc on lc.vendorcode = m.vendorcode and lc.cmmf = pd.cmmf" &
+            '                      " left join initcurr ic on ic.vendorcode = m.vendorcode and ic.cmmf = pd.cmmf" &
+            '                      " left join doc.fixedcurrency fc on fc.myyear = " & Year(sr.startdate) - 1 & " and fc.crcy = cvp.lastcurr " &
+            '                      " left join doc.fixedcurrency fc1 on fc1.myyear = " & Year(sr.startdate) & " and fc1.crcy = ic.initialcurr " &
+            '                      " where ph.purchasinggroup <> 'FOE' and m.miropostingdate >= " & mydate1 & " and m.miropostingdate <= " & mydate2 & "), " &
+            '                  "q2 as (select * from  getporeversedcurrsbu5(" & Year(sr.startdate) & "," & DateFormatyyyyMMdd(sr.startdate) & "," & DateFormatyyyyMMdd(sr.enddate) & ") as pr(pohd bigint , polineno integer,pono character varying,cmmf bigint,rir character varying,materialdesc character,purchasinggroup character varying,vendorcode bigint,vendorname character,shortname2 text,payt character varying,supplierinvoicenum character varying,mironumber bigint,miropostingdate date," & _
+            '                      " crcy character varying, amount numeric,newamount numeric,newamountfp numeric,newamountwomoulds numeric, qty numeric,oun character varying,reversedby bigint,comfam integer,familyname character,vpi text,  sbuname text,sbu text,plnt integer,category character,cmmftype character varying,validpricesap numeric,eol boolean,stdprice numeric,shiptoparty bigint,shiptopartyname character,spm text,pm character,amort numeric, variance numeric,""tovariance"" numeric,""averpricey-1"" numeric,""lastprice-y"" numeric,""initialprice"" numeric,""towavpy-1"" numeric, ""towlkpy-1"" numeric, towstd numeric,groupsbu text,groupact text, avrpayt integer, amtwpayt numeric,range character varying,rangedesc character varying,modelcode character varying,sbuname2 character varying,originalamount numeric ,""averpricey-1fixedcurr"" numeric,""lastpricey-1fixedcurr"" numeric,""initialprice-fixedcurr"" numeric )" & _
+            '                      " union all (select null,null,null,null,null,ma.description,'FO9', ma.vendorcode,v.vendorname,v.shortname2 as shortname,null,null,null,ma.period as miropostingdate,null,ma.amount,ma.amount as newamount,validstdprice(ma.pg,ma.amount) as newamountfp,validmould(ma.pg,ma.amount) as newamountwomoulds,null,null, null,ma.familyid, f.familyname,vpi.sbuname as vpiname,null,sbu.sbuname as sbu,null,sct.category,'A',null,null,null,null,null," &
+            '                      " case getgroupsbu(odm.customercode,odm.customername,gs.groupsbuname,ma.pg) when 'NON GROUP SUPPLIERS (SBU)' then doc.validatespmpm(mus.username,mu2.username)   when 'COMPONENT' then doc.validatespmpm(musvp.username,mu2.username) when 'MOULD' then doc.validatespmpm(musvp.username,mu2.username)  when 'SPARE PART' then doc.validatespmpm(musvp.username,mu2.username) end as spm," &
+            '                      " case getgroupsbu(odm.customercode,odm.customername,gs.groupsbuname,ma.pg) when 'NON GROUP SUPPLIERS (SBU)' then doc.validatespmpm(mu.username,mu1.username)  when 'COMPONENT' then doc.validatespmpm(muvp.username,mu1.username) when 'MOULD' then doc.validatespmpm(muvp.username,mu1.username)  when 'SPARE PART' then doc.validatespmpm(muvp.username,mu1.username) end as pm," &
+            '                      " null,null,ma.amount * - 1 ,null,null ,null ,null,null,null," &
+            '                      " getgroupsbu(odm.customercode,odm.customername,gs.groupsbuname,ma.pg) as groupsbu," &
+            '                      " gs1.groupsbuname as groupact,null,null::numeric,null,null,null,null,ma.amount,null::numeric,null::numeric,null::numeric" & _
+            '                      " from manualadjustment ma left join vendor v on v.vendorcode = ma.vendorcode left join family f on f.familyid = ma.familyid left join officer of on of.officerid = ma.ssm::text left join officerseb pm on pm.ofsebid = v.pmid left join groupingcodesbu gcs on gcs.groupingcode = ma.grouping left join sbu on sbu.sbuid = gcs.sbuid left join sbu vpi on vpi.sbuid = gcs.vpiid left join orderlinemembers odm on odm.orderlineid = 15 and odm.customercode = ma.vendorcode left join vendor vs on vs.vendorcode = odm.customercode " &
+            '                      " left join purchasinggroup pg on pg.purchasinggroup = 'FO9' left join groupsbu gs on gs.groupsbuid = pg.groupsbuidpg left join groupsbu gs1 on gs1.groupsbuid = pg.groupact left join supplierspanel spl on spl.vendorcode = ma.vendorcode " &
+            '                      " left join doc.vendorfamilyex vfex on vfex.vendorcode = ma.vendorcode and vfex.familyid = ma.familyid left join officerseb o on o.ofsebid = vfex.pmid " &
+            '                      " LEFT JOIN doc.viewvendorfamilypm vfp ON vfp.vendorcode = v.vendorcode LEFT JOIN officerseb os ON os.ofsebid = vfp.pmid LEFT JOIN masteruser mu1 ON mu1.id = os.muid LEFT JOIN officerseb o1 ON o1.ofsebid = os.parent LEFT JOIN masteruser mu2 ON mu2.id = o1.muid" &
+            '                      " left join masteruser mu on mu.id = o.muid left join officerseb spm on spm.ofsebid = o.parent left join masteruser mus on mus.id = spm.muid " &
+            '                      " left join doc.vendorpm vp on vp.vendorcode = v.vendorcode left join officerseb ovp on ovp.ofsebid = vp.pmid left join masteruser muvp " &
+            '                      " on muvp.id = ovp.muid left join officerseb spmvp on spmvp.ofsebid = ovp.parent left join masteruser musvp on musvp.id = spmvp.muid" &
+            '                      " Left join supplierscategory sct on sct.supplierscategoryid = spl.supplierscategoryid" & _
+            '                      " where period >= " & mydate1 & " and period <=  " & mydate2 & ")) "
+            'obj.strsql = withstrsql & " select q1.*,case when ""averpricey-1fixedcurr"" isnull then q1.qty * ""initialprice-fixedcurr"" else" &
+            '                          " q1.qty * ""averpricey-1fixedcurr"" end as ""towaverpricey-1fixedcurr"", case when ""lastpricey-1fixedcurr"" isnull then " &
+            '                          " q1.qty * ""initialprice-fixedcurr"" else q1.qty * ""lastpricey-1fixedcurr"" end as ""towlastpricey-1fixedcurr""," & q1fieldname & " from q1 " &
+            '                          " left join s on s.cmmf = q1.cmmf and s.postingdate = q1.miropostingdate" &
+            '                          " union all " &
+            '                        " select q2.*,null,null,case when ""averpricey-1fixedcurr"" isnull then q2.qty * ""initialprice-fixedcurr"" else" &
+            '                        " q2.qty * ""averpricey-1fixedcurr"" end as ""towaverpricey-1fixedcurr"", case when ""lastpricey-1fixedcurr"" isnull then " &
+            '                        " q2.qty * ""initialprice-fixedcurr"" else q2.qty * ""lastpricey-1fixedcurr"" end as ""towlastpricey-1fixedcurr""," & q2fieldname & " from q2" &
+            '                        " left join s on s.cmmf = q2.cmmf and s.postingdate = q2.miropostingdate;"
             Dim withstrsql = "with " &
                           " lastcurr as (select distinct first_value(crcy) over (partition by m.vendorcode,pd.cmmf order by m.miropostingdate desc) as lastcurr," &
                           " pd.cmmf,m.vendorcode from miro m left join pomiro pm on m.miroid = pm.miroid left join podtl pd on pd.podtlid = pm.podtlid" &
                           " where date_part('Year',m.miropostingdate) =  " & Year(sr.startdate) - 1 & "),initcurr as (select distinct first_value(crcy) over (partition by m.vendorcode,pd.cmmf order by m.miropostingdate asc ) as initialcurr," &
                           "pd.cmmf,m.vendorcode from miro m left join pomiro pm on m.miroid = pm.miroid left join podtl pd on pd.podtlid = pm.podtlid where date_part('Year',m.miropostingdate) = " & Year(sr.startdate) & ")," &
-                          " s as (select * from savingct01(" & mydate1 & "::date," & mydate2 & "::date," & ctfieldname & "," & cttbname & ")as " &
+                          " s as (select * from savingct02(" & mydate1 & "::date," & mydate2 & "::date," & ctfieldname & "," & cttbname & "," & GenSerial & ")as " &
                             " (cmmf bigint,postingdate date," & Replace(cttbname, "'", "") & "))," &
                             "q1 as(SELECT ph.pohd, pd.polineno, ph.pono, pd.cmmf, mm.rri,mm.materialdesc, ph.purchasinggroup, m.vendorcode, v.vendorname,v.shortname,e.termsofpayment,  m.supplierinvoicenum, m.mironumber, m.miropostingdate, pm.crcy as originalcurrency, getpocurramountdc(ph.pohd,pd.polineno,pm.crcy,pm.amount,pm.qty,m.miropostingdate) as amount,getpocurramountdc(ph.pohd,pd.polineno,pm.crcy,pm.amount,pm.qty,m.miropostingdate) -( validnum(agv.value) / getexrate(ph.pohd,pd.polineno)::numeric(18,4) * pm.qty) as newamount ,  validstdprice(pg.purchasinggroup,getpocurramountdc(ph.pohd,pd.polineno,pm.crcy,pm.amount,pm.qty,m.miropostingdate) -( validnum(agv.value) / getexrate(ph.pohd,pd.polineno)::numeric(18,4) * pm.qty)) as newamountfp,validmould(pg.purchasinggroup,getpocurramountdc(ph.pohd,pd.polineno,pm.crcy,pm.amount,pm.qty,m.miropostingdate) -( validnum(agv.value) / getexrate(ph.pohd,pd.polineno)::numeric(18,4) * pm.qty)) as newamountwomoulds, pm.qty, pd.oun, pm.pomiroid, mm.familylv1 as comfam, f.familyname, validvpi(s.pi_vpi,pg.purchasinggroup) AS vpi, validvpi(s.pi_sbuname,pg.purchasinggroup) as sbuname,validvpi(s.pi_sbu,pg.purchasinggroup) as sbu, poplant.plant, sct.category, mm.cmmftype, (getvalidpricesap(pd.cmmf,m.vendorcode,m.miropostingdate) / getexrate(ph.pohd,pd.polineno))::numeric(18,4) AS validpricesap, c.eol, validstdprice(pg.purchasinggroup,getstdcost(mm.cmmf,m.miropostingdate)) AS stdprice," & _
                                   " sdpo.shiptoparty, cust.customername AS shiptopartyname," &
-                                  " case getgroupsbu(odm.customercode,odm.customername,gs.groupsbuname,ph.purchasinggroup) when 'NON GROUP SUPPLIERS (SBU)' then doc.validatespmpm(mus.username,mu2.username) when 'COMPONENT' then doc.validatespmpm(musvp.username,mu2.username) when 'MOULD' then doc.validatespmpm(musvp.username,mu2.username)  when 'SPARE PART' then doc.validatespmpm(musvp.username,mu2.username) end as spm," &
-                                  " case getgroupsbu(odm.customercode,odm.customername,gs.groupsbuname,ph.purchasinggroup) when 'NON GROUP SUPPLIERS (SBU)' then doc.validatespmpm(mu.username,mu1.username)  when 'COMPONENT' then doc.validatespmpm(muvp.username,mu1.username)  when 'MOULD' then doc.validatespmpm(muvp.username,mu1.username)   when 'SPARE PART' then doc.validatespmpm(muvp.username,mu1.username) end as pm," &
+                                  " case getgroupsbu(odm.customercode,odm.customername,gs.groupsbuname,ph.purchasinggroup,mm.familylv1) when 'NON GROUP SUPPLIERS (SBU)' then doc.validatespmpm(mus.username,mu2.username) when 'COMPONENT' then doc.validatespmpm(musvp.username,mu2.username) when 'MOULD' then doc.validatespmpm(musvp.username,mu2.username)  when 'SPARE PART' then doc.validatespmpm(musvp.username,mu2.username) end as spm," &
+                                  " case getgroupsbu(odm.customercode,odm.customername,gs.groupsbuname,ph.purchasinggroup,mm.familylv1) when 'NON GROUP SUPPLIERS (SBU)' then doc.validatespmpm(mu.username,mu1.username)  when 'COMPONENT' then doc.validatespmpm(muvp.username,mu1.username)  when 'MOULD' then doc.validatespmpm(muvp.username,mu1.username)   when 'SPARE PART' then doc.validatespmpm(muvp.username,mu1.username) end as pm," &
                                   " validnum(agv.value) / getexrate(ph.pohd,pd.polineno)::numeric(18,4) as amort, ((getpocurramountdc(ph.pohd,pd.polineno,pm.crcy,pm.amount,pm.qty,m.miropostingdate) / pm.qty) - validnum(agv.value) / getexrate(ph.pohd,pd.polineno)::numeric(18,4) - validstdprice(pg.purchasinggroup, getstdcost(mm.cmmf,m.miropostingdate))) * -1 as variance,(((getpocurramountdc(ph.pohd,pd.polineno,pm.crcy,pm.amount,pm.qty,m.miropostingdate) / pm.qty )- validnum(agv.value) / getexrate(ph.pohd,pd.polineno)::numeric(18,4) - validstdprice(pg.purchasinggroup, getstdcost(mm.cmmf,m.miropostingdate))) * -1) * pm.qty as ""tovariance"" , cvp.averprice::numeric as ""averpricey-1"",(getlkpamount(pd.cmmf,m.vendorcode,date_part('year',m.miropostingdate)::integer,cvp.lastprice)::numeric - cvp.agv2::numeric)  as ""lastpricey-1""," &
                                   " getinitialpriceamount(pd.cmmf,m.vendorcode,date_part('year',m.miropostingdate)::integer,cvp1.initialprice) - (cvp1.agv1::numeric / getexrate(ph.pohd,pd.polineno)::numeric(18,4))as ""initialprice""," & _
                                   " case when cvp.averprice is null then (getinitialpriceamount(pd.cmmf,m.vendorcode,date_part('year',m.miropostingdate)::integer,cvp1.initialprice)::numeric - (cvp1.agv1::numeric/getexrate(ph.pohd,pd.polineno)::numeric(18,4))) * qty::numeric Else cvp.averprice::numeric * qty::numeric End as ""towavpy-1"", case when cvp.lastprice is null then  (getinitialpriceamount(pd.cmmf,m.vendorcode,date_part('year',m.miropostingdate)::integer,cvp1.initialprice)::numeric - cvp1.agv1::numeric) * qty::numeric Else (getlkpamount(pd.cmmf,m.vendorcode,date_part('year',m.miropostingdate)::integer,cvp.lastprice)::numeric - cvp.agv2::numeric) * qty::numeric End as ""towlkpy-1"", qty::numeric * validstdprice(pg.purchasinggroup,(getstdcost(mm.cmmf,m.miropostingdate))) as towstd, " &
-                                  " getgroupsbu(odm.customercode,odm.customername,gs.groupsbuname,ph.purchasinggroup) as groupsbu," &
+                                  " getgroupsbu(odm.customercode,odm.customername,gs.groupsbuname,ph.purchasinggroup,mm.familylv1) as groupsbu," &
                                   " validgroupact(gs1.groupsbuname,pmo.officersebname) as groupact,pt.days as avrpayt,pt.days::numeric * (getpocurramountdc(ph.pohd,pd.polineno,pm.crcy,pm.amount,pm.qty,m.miropostingdate)::numeric -( validnum(agv.value)::numeric / getexrate(ph.pohd,pd.polineno)::numeric(18,4) * pm.qty::numeric)) as amtwpayt,r.range,r.rangedesc,c.modelcode,s.sbuname as sbusap,pm.amount as originalamount," &
                                   " cvp.averpricefixcurr as ""averpricey-1fixedcurr"" ," &
                                   " case when fc.crcy isnull then cvp.lastprice - cvp.agv2 else  (cvp.lastprice - cvp.agv2) / fc.currency   end as ""lastpricey-1fixedcurr""," &
-                                  " case when fc1.crcy isnull then cvp1.initialprice - cvp1.agv1  else  (cvp1.initialprice - cvp1.agv1)  / fc1.currency   end as ""initialprice-fixedcurr""" &
+                                  " case when fc1.crcy isnull then cvp1.initialprice - cvp1.agv1  else  (cvp1.initialprice - cvp1.agv1)  / fc1.currency   end as ""initialprice-fixedcurr"",so.soldtoparty,cust2.customername as soldtopartyname" &
                                   " FROM pomiro pm" & _
                                   " LEFT JOIN miro m ON m.miroid = pm.miroid" & _
                                   " LEFT JOIN podtl pd ON pd.podtlid = pm.podtlid" & _
@@ -747,7 +837,11 @@ Public Class ReportAVPISaving
                                   " LEFT JOIN doc.viewvendorfamilypm vfp ON vfp.vendorcode = v.vendorcode LEFT JOIN officerseb os ON os.ofsebid = vfp.pmid LEFT JOIN masteruser mu1 ON mu1.id = os.muid LEFT JOIN officerseb o1 ON o1.ofsebid = os.parent LEFT JOIN masteruser mu2 ON mu2.id = o1.muid" &
                                   " left join groupsbu gs on gs.groupsbuid = pg.groupsbuidpg left join orderlinemembers odm on odm.orderlineid = 15 and odm.customercode = m.vendorcode left join vendor vs on vs.vendorcode = odm.customercode" & _
                                   " left join groupsbu gs1 on gs1.groupsbuid = pg.groupact" & _
-                                  " LEFT JOIN cxsebpodtl sdpo ON sdpo.sebasiapono = ph.pohd AND sdpo.polineno = pd.polineno" & _
+                                  " LEFT JOIN cxsebpodtl sdpo ON sdpo.sebasiapono = ph.pohd AND sdpo.polineno = pd.polineno" &
+                                  " left join cxrelsalesdocpo rel on rel.cxsebpodtlid = sdpo.cxsebpodtlid" &
+                                  " left join cxsalesorderdtl sa on sa.cxsalesorderdtlid = rel.cxsalesorderdtlid " &
+                                  " left join cxsalesorder so on so.sebasiasalesorder = sa.sebasiasalesorder" &
+                                  " LEFT JOIN customer cust2 ON cust2.customercode = so.soldtoparty" &
                                   " LEFT JOIN customer cust ON cust.customercode = sdpo.shiptoparty  left join agreementtx agtx on agtx.material = pd.cmmf and agtx.postingdate = m.miropostingdate and agtx.status left join agvalue agv on agv.agreement = agtx.agreement  " & _
                                   " left join cmmfvendorprice cvp on cvp.cmmf = pd.cmmf and cvp.vendorcode = m.vendorcode and cvp.myyear = " & Year(sr.startdate) - 1 &
                                   " left join cmmfvendorprice cvp1 on cvp1.cmmf = pd.cmmf and cvp1.vendorcode = m.vendorcode and cvp1.myyear = " & Year(sr.startdate) &
@@ -773,14 +867,19 @@ Public Class ReportAVPISaving
                                   " on muvp.id = ovp.muid left join officerseb spmvp on spmvp.ofsebid = ovp.parent left join masteruser musvp on musvp.id = spmvp.muid" &
                                   " Left join supplierscategory sct on sct.supplierscategoryid = spl.supplierscategoryid" & _
                                   " where period >= " & mydate1 & " and period <=  " & mydate2 & ")) "
-            obj.strsql = withstrsql & " select q1.*,case when ""averpricey-1fixedcurr"" isnull then q1.qty * ""initialprice-fixedcurr"" else" &
+            obj.strsql = withstrsql & " select q1.pohd,q1.polineno,q1.pono,q1.cmmf,q1.rri,q1.materialdesc,q1.purchasinggroup,q1.vendorcode,q1.vendorname,q1.shortname,q1.termsofpayment,q1.supplierinvoicenum,q1.mironumber,q1.miropostingdate,q1.originalcurrency,q1.amount,q1.newamount,q1.newamountfp,q1.newamountwomoulds,q1.qty,q1.oun,q1.pomiroid,q1.comfam,q1.familyname,q1.vpi,q1.sbuname,q1.sbu,q1.plant,q1.category,q1.cmmftype,q1.validpricesap,q1.eol,q1.stdprice,q1.shiptoparty,q1.shiptopartyname,q1.spm,q1.pm,q1.amort,q1.variance,q1.tovariance,q1.""averpricey-1"",q1.""lastpricey-1"",q1.initialprice,q1.""towavpy-1"",q1.""towlkpy-1"",q1.towstd,q1.groupsbu,q1.groupact,q1.avrpayt,q1.amtwpayt,q1.range,q1.rangedesc,q1.modelcode,q1.sbusap,q1.originalamount,q1.""averpricey-1fixedcurr"",q1.""lastpricey-1fixedcurr"",q1.""initialprice-fixedcurr""," &
+                                      " case when ""averpricey-1fixedcurr"" isnull then q1.qty * ""initialprice-fixedcurr"" else" &
                                       " q1.qty * ""averpricey-1fixedcurr"" end as ""towaverpricey-1fixedcurr"", case when ""lastpricey-1fixedcurr"" isnull then " &
-                                      " q1.qty * ""initialprice-fixedcurr"" else q1.qty * ""lastpricey-1fixedcurr"" end as ""towlastpricey-1fixedcurr""," & q1fieldname & " from q1 " &
+                                      " q1.qty * ""initialprice-fixedcurr"" else q1.qty * ""lastpricey-1fixedcurr"" end as ""towlastpricey-1fixedcurr""," & q1fieldname & " ,q1.soldtoparty,q1.soldtopartyname from q1 " &
                                       " left join s on s.cmmf = q1.cmmf and s.postingdate = q1.miropostingdate" &
                                       " union all " &
-                                    " select q2.*,case when ""averpricey-1fixedcurr"" isnull then q2.qty * ""initialprice-fixedcurr"" else" &
+                                    " select q2.pohd,q2.polineno,q2.pono,q2.cmmf,q2.rir,q2.materialdesc,q2.purchasinggroup,q2.vendorcode,q2.vendorname,q2.shortname2,q2.payt,q2.supplierinvoicenum,q2.mironumber,q2.miropostingdate,q2.crcy,q2.amount,q2.newamount" &
+                                    " ,q2.newamountfp,q2.newamountwomoulds,q2.qty,q2.oun,q2.reversedby,q2.comfam,q2.familyname,q2.vpi,q2.sbuname,q2.sbu,q2.plnt,q2.category,q2.cmmftype,q2.validpricesap,q2.eol,q2.stdprice,q2.shiptoparty,q2.shiptopartyname" &
+                                    " ,q2.spm,q2.pm,q2.amort,q2.variance,q2.""tovariance"",q2.""averpricey-1"",q2.""lastprice-y"",q2.""initialprice"",q2.""towavpy-1"",q2.""towlkpy-1"",q2.towstd,q2.groupsbu,q2.groupact,q2.avrpayt,q2.amtwpayt,q2.range,q2.rangedesc" &
+                                    " ,q2.modelcode,q2.sbuname2,q2.originalamount,q2.""averpricey-1fixedcurr"",q2.""lastpricey-1fixedcurr"",q2.""initialprice-fixedcurr""," &
+                                    " case when ""averpricey-1fixedcurr"" isnull then q2.qty * ""initialprice-fixedcurr"" else" &
                                     " q2.qty * ""averpricey-1fixedcurr"" end as ""towaverpricey-1fixedcurr"", case when ""lastpricey-1fixedcurr"" isnull then " &
-                                    " q2.qty * ""initialprice-fixedcurr"" else q2.qty * ""lastpricey-1fixedcurr"" end as ""towlastpricey-1fixedcurr""," & q2fieldname & " from q2" &
+                                    " q2.qty * ""initialprice-fixedcurr"" else q2.qty * ""lastpricey-1fixedcurr"" end as ""towlastpricey-1fixedcurr""," & q2fieldname & " ,null,null from q2" &
                                     " left join s on s.cmmf = q2.cmmf and s.postingdate = q2.miropostingdate;"
             obj.Name = "DATA"
             'obj.osheet = oWb.Worksheets("DATA")

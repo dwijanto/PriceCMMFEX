@@ -15,6 +15,7 @@ Public Class FormImportZFA037
     Dim priceplntScaleSB As StringBuilder
     Dim PCCMMFSB As Object
     Dim PriceListIdTemp As Long
+    Dim CMMFPlanSB As StringBuilder
 
     Delegate Sub ProgressReportDelegate(ByVal id As Integer, ByRef message As String)
     Private Property FileName As String
@@ -154,6 +155,7 @@ Public Class FormImportZFA037
                           " order by ssmid,spmid,pb.pcprojectid;")
                 sb.Append("select nextval('pcproject_pcprojectid_seq');")
                 sb.Append("select nextval('pcrange_rangeid_seq');")
+                sb.Append("select cmmf from doc.cmmf3750;")
                 mymessage = String.Empty
                 If Not DbAdapter1.TbgetDataSet(sb.ToString, DS, mymessage) Then
                     ProgressReport(2, mymessage)
@@ -201,6 +203,12 @@ Public Class FormImportZFA037
                 pcprojectSeq = DS.Tables(5).Rows(0).Item(0)
                 pcrangeSeq = DS.Tables(6).Rows(0).Item(0)
 
+                '**********
+                DS.Tables(7).TableName = "CMMFPlan"
+                Dim idx7(0) As DataColumn
+                idx7(0) = DS.Tables(7).Columns(0)
+                DS.Tables(7).PrimaryKey = idx7
+
                 ProgressReport(2, "Read Text File...")
                 Try
                     Do Until .EndOfData
@@ -230,6 +238,8 @@ Public Class FormImportZFA037
                 priceplntSB = New StringBuilder
                 priceplntScaleSB = New StringBuilder
                 PCCMMFSB = New StringBuilder
+                CMMFPlanSB = New StringBuilder
+
                 Dim i As Long
                 sw2.Start()
 
@@ -424,6 +434,22 @@ Public Class FormImportZFA037
                                     '                  myrecord(1) & vbCrLf)
                                 End If
 
+                                'Find CMMFPlan
+                                If myrecord(1) = "3750" Then
+                                    Dim pkey7(0) As Object
+                                    pkey7(0) = myrecord(4) 'cmmf
+
+                                    result = DS.Tables(7).Rows.Find(pkey7)
+                                    If IsNothing(result) Then
+                                        Dim dr As DataRow = DS.Tables(7).NewRow
+                                        dr.Item(0) = myrecord(4)
+                                        DS.Tables(7).Rows.Add(dr)
+
+                                        CMMFPlanSB.Append(myrecord(4) & vbCrLf)
+                                    End If
+                                End If
+                                
+
                                 priceplntScaleSB.Append(PriceListIdTemp & vbTab &
                                                             myrecord(1) & vbTab &
                                                             validreal(myrecord(12)) & vbTab &
@@ -547,6 +573,18 @@ Public Class FormImportZFA037
                 End If
 
             End If
+
+            If CMMFPlanSB.Length > 0 Then
+                ProgressReport(2, String.Format("Copy CMMFPlan"))
+                sqlstr = "copy doc.cmmf3750(cmmf)  from stdin with null as 'Null';"
+                errmsg = DbAdapter1.copy(sqlstr, CMMFPlanSB.ToString, myret)
+                If Not myret Then
+                    ProgressReport(1, errmsg)
+                    Err.Raise(513, Description:=errmsg & " ::Copy CMMFPlanSB")
+                End If
+
+            End If
+
             myret = True
         Catch ex As Exception
 

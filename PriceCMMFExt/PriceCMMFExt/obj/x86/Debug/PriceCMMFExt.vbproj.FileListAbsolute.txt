@@ -151,3 +151,7 @@ C:\Users\dlie\Documents\GitHub\PriceCMMFEX\PriceCMMFExt\PriceCMMFExt\obj\x86\Deb
 C:\Users\dlie\Documents\GitHub\PriceCMMFEX\PriceCMMFExt\PriceCMMFExt\obj\x86\Debug\PriceCMMFExt.vbproj.GenerateResource.Cache
 C:\Users\dlie\Documents\GitHub\PriceCMMFEX\PriceCMMFExt\PriceCMMFExt\obj\x86\Debug\PriceCMMFExt.FormCurrency.resources
 C:\Users\dlie\Documents\GitHub\PriceCMMFEX\PriceCMMFExt\PriceCMMFExt\obj\x86\Debug\PriceCMMFExt.DialogInputCurrency.resources
+C:\Users\dlie\Documents\GitHub\PriceCMMFEX\PriceCMMFExt\PriceCMMFExt\obj\x86\Debug\PriceCMMFExt.FormImportAverPrice.resources
+C:\Users\dlie\Documents\GitHub\PriceCMMFEX\PriceCMMFExt\PriceCMMFExt\obj\x86\Debug\PriceCMMFExt.FormImportStdCost.resources
+C:\Users\dlie\Documents\GitHub\PriceCMMFEX\PriceCMMFExt\PriceCMMFExt\obj\x86\Debug\PriceCMMFExt.FormCMMFVendorPrice.resources
+C:\Users\dlie\Documents\GitHub\PriceCMMFEX\PriceCMMFExt\PriceCMMFExt\obj\x86\Debug\PriceCMMFExt.FormReportCMMF3750.resources

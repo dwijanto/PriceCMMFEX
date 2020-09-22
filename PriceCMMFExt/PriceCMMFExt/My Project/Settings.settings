@@ -6,7 +6,7 @@
       <Value Profile="(Default)">ODBC;DSN=PostgreSQLhon03nt;</Value>
     </Setting>
     <Setting Name="conTest" Type="System.String" Scope="User">
-      <Value Profile="(Default)">host=localhost;port=5432;database=LogisticDb20150120;CommandTimeout=1000;TimeOut=1000;</Value>
+      <Value Profile="(Default)">host=localhost;port=5433;database=LogisticDb20190909;CommandTimeout=1000;TimeOut=1000;</Value>
     </Setting>
     <Setting Name="conLive" Type="System.String" Scope="User">
       <Value Profile="(Default)">host=hon14nt;port=5432;database=LogisticDb;commandTimeout=1000;Timeout=1000;</Value>

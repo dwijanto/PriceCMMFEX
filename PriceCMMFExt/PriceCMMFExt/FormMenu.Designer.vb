@@ -32,15 +32,19 @@ Partial Class FormMenu
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
         Me.ImportSavingsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ImportZZA037ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ImportAveragePriceToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ImportStdCostToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ReportToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AveragePriceIndexToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AveragePriceIndexSavingsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PriceChangeTaskToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MasterToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CurrencyToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CMMFVendorPriceToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SupplierDocumentsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.UserGuideToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.MasterToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.CurrencyToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CMMF3750ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -55,7 +59,7 @@ Partial Class FormMenu
         '
         'ImportToolStripMenuItem
         '
-        Me.ImportToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BSEGSQ01ToolStripMenuItem, Me.ZZA0035ToolStripMenuItem, Me.PO40SQ01PO40AndPO41LocalfileToolStripMenuItem, Me.PO39ToolStripMenuItem, Me.ToolStripMenuItem1, Me.ImportSavingsToolStripMenuItem, Me.ImportZZA037ToolStripMenuItem})
+        Me.ImportToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BSEGSQ01ToolStripMenuItem, Me.ZZA0035ToolStripMenuItem, Me.PO40SQ01PO40AndPO41LocalfileToolStripMenuItem, Me.PO39ToolStripMenuItem, Me.ToolStripMenuItem1, Me.ImportSavingsToolStripMenuItem, Me.ImportZZA037ToolStripMenuItem, Me.ImportAveragePriceToolStripMenuItem, Me.ImportStdCostToolStripMenuItem})
         Me.ImportToolStripMenuItem.Name = "ImportToolStripMenuItem"
         Me.ImportToolStripMenuItem.Size = New System.Drawing.Size(55, 20)
         Me.ImportToolStripMenuItem.Text = "Import"
@@ -109,9 +113,23 @@ Partial Class FormMenu
         Me.ImportZZA037ToolStripMenuItem.Tag = "FormImportZFA037"
         Me.ImportZZA037ToolStripMenuItem.Text = "Import ZFA037 (Price List)"
         '
+        'ImportAveragePriceToolStripMenuItem
+        '
+        Me.ImportAveragePriceToolStripMenuItem.Name = "ImportAveragePriceToolStripMenuItem"
+        Me.ImportAveragePriceToolStripMenuItem.Size = New System.Drawing.Size(597, 22)
+        Me.ImportAveragePriceToolStripMenuItem.Tag = "FormImportAverPrice"
+        Me.ImportAveragePriceToolStripMenuItem.Text = "Import Average Price (Text File -> Tab Delimited)"
+        '
+        'ImportStdCostToolStripMenuItem
+        '
+        Me.ImportStdCostToolStripMenuItem.Name = "ImportStdCostToolStripMenuItem"
+        Me.ImportStdCostToolStripMenuItem.Size = New System.Drawing.Size(597, 22)
+        Me.ImportStdCostToolStripMenuItem.Tag = "FormImportStdCost"
+        Me.ImportStdCostToolStripMenuItem.Text = "Import Std Cost (Text File -> Tab Delimited)"
+        '
         'ReportToolStripMenuItem
         '
-        Me.ReportToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AveragePriceIndexToolStripMenuItem, Me.AveragePriceIndexSavingsToolStripMenuItem})
+        Me.ReportToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AveragePriceIndexToolStripMenuItem, Me.AveragePriceIndexSavingsToolStripMenuItem, Me.CMMF3750ToolStripMenuItem})
         Me.ReportToolStripMenuItem.Name = "ReportToolStripMenuItem"
         Me.ReportToolStripMenuItem.Size = New System.Drawing.Size(54, 20)
         Me.ReportToolStripMenuItem.Text = "Report"
@@ -136,6 +154,25 @@ Partial Class FormMenu
         Me.PriceChangeTaskToolStripMenuItem.Size = New System.Drawing.Size(115, 20)
         Me.PriceChangeTaskToolStripMenuItem.Text = "Price Change Task"
         '
+        'MasterToolStripMenuItem
+        '
+        Me.MasterToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CurrencyToolStripMenuItem, Me.CMMFVendorPriceToolStripMenuItem})
+        Me.MasterToolStripMenuItem.Name = "MasterToolStripMenuItem"
+        Me.MasterToolStripMenuItem.Size = New System.Drawing.Size(55, 20)
+        Me.MasterToolStripMenuItem.Text = "Master"
+        '
+        'CurrencyToolStripMenuItem
+        '
+        Me.CurrencyToolStripMenuItem.Name = "CurrencyToolStripMenuItem"
+        Me.CurrencyToolStripMenuItem.Size = New System.Drawing.Size(179, 22)
+        Me.CurrencyToolStripMenuItem.Text = "Currency"
+        '
+        'CMMFVendorPriceToolStripMenuItem
+        '
+        Me.CMMFVendorPriceToolStripMenuItem.Name = "CMMFVendorPriceToolStripMenuItem"
+        Me.CMMFVendorPriceToolStripMenuItem.Size = New System.Drawing.Size(179, 22)
+        Me.CMMFVendorPriceToolStripMenuItem.Text = "CMMF Vendor Price"
+        '
         'SupplierDocumentsToolStripMenuItem
         '
         Me.SupplierDocumentsToolStripMenuItem.Name = "SupplierDocumentsToolStripMenuItem"
@@ -157,18 +194,12 @@ Partial Class FormMenu
         Me.UserGuideToolStripMenuItem.Size = New System.Drawing.Size(131, 22)
         Me.UserGuideToolStripMenuItem.Text = "User Guide"
         '
-        'MasterToolStripMenuItem
+        'CMMF3750ToolStripMenuItem
         '
-        Me.MasterToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CurrencyToolStripMenuItem})
-        Me.MasterToolStripMenuItem.Name = "MasterToolStripMenuItem"
-        Me.MasterToolStripMenuItem.Size = New System.Drawing.Size(55, 20)
-        Me.MasterToolStripMenuItem.Text = "Master"
-        '
-        'CurrencyToolStripMenuItem
-        '
-        Me.CurrencyToolStripMenuItem.Name = "CurrencyToolStripMenuItem"
-        Me.CurrencyToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
-        Me.CurrencyToolStripMenuItem.Text = "Currency"
+        Me.CMMF3750ToolStripMenuItem.Name = "CMMF3750ToolStripMenuItem"
+        Me.CMMF3750ToolStripMenuItem.Size = New System.Drawing.Size(233, 22)
+        Me.CMMF3750ToolStripMenuItem.Tag = "FormReportCMMF3750"
+        Me.CMMF3750ToolStripMenuItem.Text = "CMMF 3750"
         '
         'FormMenu
         '
@@ -204,5 +235,9 @@ Partial Class FormMenu
     Friend WithEvents PO39ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents MasterToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents CurrencyToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ImportAveragePriceToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ImportStdCostToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents CMMFVendorPriceToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents CMMF3750ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
 End Class

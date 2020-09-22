@@ -20,12 +20,32 @@ Public Class ExportSAPClass
         '             " order by plant,vendorcode,cmmf,validon;" &
         '             " select cvalue from paramhd where paramname = 'ExportToSAPPriceChange';" &
         '             " select nextval('exportfileid_seq') as sequence;"
+        'Dim sqlstr = "with oum as (select distinct * from (select cmmf,vendorcode,first_value(uom) OVER (partition by cmmf,vendorcode ORDER BY validfrom DESC) as uom" &
+        '             " from pricelist order by cmmf,vendorcode,validfrom desc) as foo)" &
+        '             " select pcdt.*,pchd.*,doc.getvendorcurr(pcdt.vendorcode,pcdt.validon) as curr ,oum.uom from pricechangedtl pcdt" &
+        '             " left join pricechangehd pchd on pchd.pricechangehdid = pcdt.pricechangehdid" &
+        '             " left join oum on oum.vendorcode = pcdt.vendorcode and oum.cmmf = pcdt.cmmf" &
+        '             " where   exportfileid isnull   and   status = 5 and   pricetype = 'FOB' order by plant,pcdt.vendorcode,pcdt.cmmf,validon;" &
+        '             " select cvalue from paramhd where paramname = 'ExportToSAPPriceChange';" &
+        '             " select nextval('exportfileid_seq') as sequence;"
         Dim sqlstr = "with oum as (select distinct * from (select cmmf,vendorcode,first_value(uom) OVER (partition by cmmf,vendorcode ORDER BY validfrom DESC) as uom" &
-                     " from pricelist order by cmmf,vendorcode,validfrom desc) as foo)" &
-                     " select pcdt.*,pchd.*,doc.getvendorcurr(pcdt.vendorcode,pcdt.validon) as curr ,oum.uom from pricechangedtl pcdt" &
+                     " from pricelist order by cmmf,vendorcode,validfrom desc) as foo)," &
+                     " dtl as (select pcdt.pricechangedtlid,pcdt.pricechangehdid,pcdt.vendorcode,pcdt.cmmf,pcdt.purchorg,plant,pcdt.validon,pcdt.price,pcdt.pricingunit,pcdt.comment,pcdt.sap," &
+                     " pchd.pricechangehdid,pchd.creator,pchd.validator1,pchd.validator2,pchd.pricetype,pchd.description,pchd.submitdate,pchd.negotiateddate,pchd.attachment,pchd.creationdate,pchd.status,pchd.actiondate,       pchd.actionby,pchd.sendstdvalidatedtocreator,pchd.sendtocc,pchd.reasonid,pchd.sendcompletedtocreator,pchd.exportfileid,pchd.exportfiledate,pchd.validator3,pchd.sendtowmf,pchd.specialprojectid," &
+                     " doc.getvendorcurr(pcdt.vendorcode,pcdt.validon) as curr ,oum.uom from pricechangedtl pcdt" &
                      " left join pricechangehd pchd on pchd.pricechangehdid = pcdt.pricechangehdid" &
                      " left join oum on oum.vendorcode = pcdt.vendorcode and oum.cmmf = pcdt.cmmf" &
-                     " where   exportfileid isnull   and   status = 5 and   pricetype = 'FOB' order by plant,pcdt.vendorcode,pcdt.cmmf,validon;" &
+                     " where   exportfileid isnull   and   status = 5 and   pricetype = 'FOB' order by plant,pcdt.vendorcode,pcdt.cmmf,validon)" &
+                     " select * from dtl" &
+                     " union all " &
+                     " (select pcdt.pricechangedtlid,pcdt.pricechangehdid,pcdt.vendorcode,pcdt.cmmf,pcdt.purchorg,3750,pcdt.validon,pcdt.price,pcdt.pricingunit,pcdt.comment,pcdt.sap," &
+                     " pchd.pricechangehdid, pchd.creator, pchd.validator1, pchd.validator2, pchd.pricetype, pchd.description, pchd.submitdate, pchd.negotiateddate, pchd.attachment, pchd.creationdate, pchd.status, pchd.actiondate," &
+                     " pchd.actionby, pchd.sendstdvalidatedtocreator, pchd.sendtocc, pchd.reasonid, pchd.sendcompletedtocreator, pchd.exportfileid, pchd.exportfiledate, pchd.validator3, pchd.sendtowmf, pchd.specialprojectid" &
+                     " ,doc.getvendorcurr(pcdt.vendorcode,pcdt.validon) as curr ,oum.uom from pricechangedtl pcdt " &
+                     " inner join doc.cmmf3750 c on c.cmmf = pcdt.cmmf" &
+                     " left join pricechangehd pchd on pchd.pricechangehdid = pcdt.pricechangehdid" &
+                     " left join oum on oum.vendorcode = pcdt.vendorcode and oum.cmmf = pcdt.cmmf" &
+                     " where exportfileid isnull and status = 5 and pricetype = 'FOB' and pcdt.plant <> 3750 order by plant,pcdt.vendorcode,pcdt.cmmf,validon);" &
                      " select cvalue from paramhd where paramname = 'ExportToSAPPriceChange';" &
                      " select nextval('exportfileid_seq') as sequence;"
         DS = New DataSet

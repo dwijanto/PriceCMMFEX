@@ -60,6 +60,9 @@ Public Class FormMenu
         AddHandler ImportZZA037ToolStripMenuItem.Click, AddressOf ToolStripMenuItem_Click
         AddHandler SupplierDocumentsToolStripMenuItem.Click, AddressOf ToolStripMenuItem_Click
         AddHandler PO39ToolStripMenuItem.Click, AddressOf ToolStripMenuItem_Click
+        AddHandler ImportAveragePriceToolStripMenuItem.Click, AddressOf ToolStripMenuItem_Click
+        AddHandler ImportStdCostToolStripMenuItem.Click, AddressOf ToolStripMenuItem_Click
+        AddHandler CMMF3750ToolStripMenuItem.Click, AddressOf ToolStripMenuItem_Click
     End Sub
 
     Private Sub FormMenu_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
@@ -129,5 +132,22 @@ Public Class FormMenu
     Private Sub CurrencyToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CurrencyToolStripMenuItem.Click
         Dim myform As New FormCurrency
         myform.Show()
+    End Sub
+
+    Private Sub ImportAveragePriceToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ImportAveragePriceToolStripMenuItem.Click
+
+    End Sub
+
+    Private Sub ImportStdCostToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ImportStdCostToolStripMenuItem.Click
+
+    End Sub
+
+    Private Sub CMMFVendorPriceToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CMMFVendorPriceToolStripMenuItem.Click
+        Dim myform As New FormCMMFVendorPrice
+        myform.Show()
+    End Sub
+
+    Private Sub CMMF3750ToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CMMF3750ToolStripMenuItem.Click
+
     End Sub
 End Class

@@ -111,6 +111,12 @@
     <Compile Include="Form\DialogInputSpecialProject.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Form\FormCMMFVendorPrice.Designer.vb">
+      <DependentUpon>FormCMMFVendorPrice.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\FormCMMFVendorPrice.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form\FormCurrency.Designer.vb">
       <DependentUpon>FormCurrency.vb</DependentUpon>
     </Compile>
@@ -145,6 +151,18 @@
       <DependentUpon>FormHistoryDetail.vb</DependentUpon>
     </Compile>
     <Compile Include="Form\FormHistoryDetail.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\FormImportAverPrice.Designer.vb">
+      <DependentUpon>FormImportAverPrice.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\FormImportAverPrice.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\FormImportStdCost.Designer.vb">
+      <DependentUpon>FormImportStdCost.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\FormImportStdCost.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form\FormImportZFA037.Designer.vb">
@@ -238,6 +256,12 @@
     <Compile Include="Form\FormPriceChangeReasonMaster.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Form\FormReportCMMF3750.designer.vb">
+      <DependentUpon>FormReportCMMF3750.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\FormReportCMMF3750.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form\FormSpecialProjectMaster.Designer.vb">
       <DependentUpon>FormSpecialProjectMaster.vb</DependentUpon>
     </Compile>
@@ -306,6 +330,9 @@
     <EmbeddedResource Include="Form\DialogInputSpecialProject.resx">
       <DependentUpon>DialogInputSpecialProject.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Form\FormCMMFVendorPrice.resx">
+      <DependentUpon>FormCMMFVendorPrice.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form\FormCurrency.resx">
       <DependentUpon>FormCurrency.vb</DependentUpon>
     </EmbeddedResource>
@@ -323,6 +350,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\FormHistoryDetail.resx">
       <DependentUpon>FormHistoryDetail.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\FormImportAverPrice.resx">
+      <DependentUpon>FormImportAverPrice.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\FormImportStdCost.resx">
+      <DependentUpon>FormImportStdCost.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\FormImportZFA037.resx">
       <DependentUpon>FormImportZFA037.vb</DependentUpon>
@@ -368,6 +401,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\FormPriceChangeReasonMaster.resx">
       <DependentUpon>FormPriceChangeReasonMaster.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\FormReportCMMF3750.resx">
+      <DependentUpon>FormReportCMMF3750.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\FormSpecialProjectMaster.resx">
       <DependentUpon>FormSpecialProjectMaster.vb</DependentUpon>

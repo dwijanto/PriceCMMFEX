@@ -1099,11 +1099,24 @@ Public Class FormPriceChange2
                                 '         " left join pricelist pr on pr.pricelistid = (select pricelistid from pricelist " &
                                 '         " where cmmf = p.cmmf and vendorcode = p.vendorcode order by validfrom desc limit 1)" &
                                 '         " where creator = '" & creator & "'"
+                                'sqlstr = "with std as (select cmmf, max(validfrom) as validfrom from standardcostad group by cmmf) " &
+                                '         " select p.cmmf,c.commercialref,p.vendorcode,p.purchorg,p.plant,p.validon,p.price,p.pricingunit,p.comment,c.commercialref,v.vendorname::character varying,v.shortname::character varying,materialdesc::character varying,r.range,r.rangedesc,ad.planprice1, ad.per,pr.amount::numeric, pr.perunit::numeric," &
+                                '         " (getdelta(p.price,p.pricingunit,ad.planprice1,ad.per)) as deltastd," &
+                                '         " (getdelta(p.price,p.pricingunit,pr.amount::numeric,pr.perunit::numeric) ) as deltasap," &
+                                '         " getalert(p.price,p.pricingunit,pr.amount::numeric,pr.perunit::numeric,ad.planprice1,ad.per,p.validon,pr.validfrom) as alert,pr.validfrom ,duplicate" &
+                                '         " from pricechangedtltemp p" &
+                                '         " left join vendor v on v.vendorcode = p.vendorcode" &
+                                '         " left join cmmf c on c.cmmf = p.cmmf" &
+                                '         " left join range r on r.rangeid = c.rangeid" &
+                                '         " left join std on std.cmmf = p.cmmf" &
+                                '         " left join standardcostad ad on ad.cmmf = std.cmmf and ad.validfrom = std.validfrom" &
+                                '         " left join pricelistscale pr on pr.id = (select id from pricelistscale ps" &
+                                '         " where ps.cmmf = p.cmmf and ps.vendorcode = p.vendorcode and ps.plant = p.plant order by validfrom desc limit 1)" &
+                                '         " where creator = '" & creator & "'"
                                 sqlstr = "with std as (select cmmf, max(validfrom) as validfrom from standardcostad group by cmmf) " &
                                          " select p.cmmf,c.commercialref,p.vendorcode,p.purchorg,p.plant,p.validon,p.price,p.pricingunit,p.comment,c.commercialref,v.vendorname::character varying,v.shortname::character varying,materialdesc::character varying,r.range,r.rangedesc,ad.planprice1, ad.per,pr.amount::numeric, pr.perunit::numeric," &
-                                         " (getdelta(p.price,p.pricingunit,ad.planprice1,ad.per)) as deltastd," &
-                                         " (getdelta(p.price,p.pricingunit,pr.amount::numeric,pr.perunit::numeric) ) as deltasap," &
-                                         " getalert(p.price,p.pricingunit,pr.amount::numeric,pr.perunit::numeric,ad.planprice1,ad.per,p.validon,pr.validfrom) as alert,pr.validfrom ,duplicate" &
+                                        " (getpriceplantinfo('New',p.cmmf,p.vendorcode,p.plant,p.validon,p.price,p.pricingunit,ad.planprice1,ad.per)).*" &
+                                        " ,pr.validfrom ,duplicate" &
                                          " from pricechangedtltemp p" &
                                          " left join vendor v on v.vendorcode = p.vendorcode" &
                                          " left join cmmf c on c.cmmf = p.cmmf" &
@@ -1113,6 +1126,7 @@ Public Class FormPriceChange2
                                          " left join pricelistscale pr on pr.id = (select id from pricelistscale ps" &
                                          " where ps.cmmf = p.cmmf and ps.vendorcode = p.vendorcode and ps.plant = p.plant order by validfrom desc limit 1)" &
                                          " where creator = '" & creator & "'"
+
                                 If DbAdapter1.TbgetDataSet(sqlstr, DSDetail, mymessage) Then
                                     ProgressReport(7, "assign to db")
                                 Else
