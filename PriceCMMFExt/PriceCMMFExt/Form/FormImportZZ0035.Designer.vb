@@ -90,7 +90,7 @@ Partial Class FormImportZZ0035
         'ToolStripStatusLabel1
         '
         Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
-        Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(403, 17)
+        Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(434, 17)
         Me.ToolStripStatusLabel1.Spring = True
         Me.ToolStripStatusLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '

@@ -817,8 +817,8 @@ Public Class ReportAVPISaving
                                   " cvp.averpricefixcurr as ""averpricey-1fixedcurr"" ," &
                                   " case when fc.crcy isnull then cvp.lastprice - cvp.agv2 else  (cvp.lastprice - cvp.agv2) / fc.currency   end as ""lastpricey-1fixedcurr""," &
                                   " case when fc1.crcy isnull then cvp1.initialprice - cvp1.agv1  else  (cvp1.initialprice - cvp1.agv1)  / fc1.currency   end as ""initialprice-fixedcurr"",so.soldtoparty,cust2.customername as soldtopartyname" &
-                                  " FROM pomiro pm" & _
-                                  " LEFT JOIN miro m ON m.miroid = pm.miroid" & _
+                                  " FROM miro m" & _
+                                  " LEFT JOIN pomiro pm ON pm.miroid = m.miroid" & _
                                   " LEFT JOIN podtl pd ON pd.podtlid = pm.podtlid" & _
                                   " Left join ekko e on e.po = pd.pohd LEFT JOIN pohd ph ON ph.pohd = pd.pohd" &
                                   " left join poplant on poplant.po = ph.pohd" &

@@ -6,7 +6,7 @@
       <Value Profile="(Default)">ODBC;DSN=PostgreSQLhon03nt;</Value>
     </Setting>
     <Setting Name="conTest" Type="System.String" Scope="User">
-      <Value Profile="(Default)">host=localhost;port=5433;database=LogisticDb20190909;CommandTimeout=1000;TimeOut=1000;</Value>
+      <Value Profile="(Default)">host=localhost;port=5433;database=LogisticDb20200406;CommandTimeout=1000;TimeOut=1000;</Value>
     </Setting>
     <Setting Name="conLive" Type="System.String" Scope="User">
       <Value Profile="(Default)">host=hon14nt;port=5432;database=LogisticDb;commandTimeout=1000;Timeout=1000;</Value>
@@ -26,9 +26,9 @@
     <Setting Name="Connectionstring1" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ConnectionString&gt;host=hon14nt;port=5432;database=LogisticDb;commandTimeout=1000;Timeout=1000;&lt;/ConnectionString&gt;
+  &lt;ConnectionString&gt;host=localhost;port=5433;database=LogisticDb20200406;CommandTimeout=1000;TimeOut=1000;&lt;/ConnectionString&gt;
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">host=hon14nt;port=5432;database=LogisticDb;commandTimeout=1000;Timeout=1000;</Value>
+      <Value Profile="(Default)">host=localhost;port=5433;database=LogisticDb20200406;CommandTimeout=1000;TimeOut=1000;</Value>
     </Setting>
   </Settings>
 </SettingsFile>
