@@ -177,7 +177,7 @@ Public Class FormMyTask3
                " FROM ( select pd.cmmf,pl.vendorcode,pp.plant,pl.validfrom from my left join pricechangedtl pd  on pd.pricechangehdid = my.pricechangehdid left join pricelist pl on pl.cmmf = pd.cmmf LEFT JOIN priceplantscale pp ON pp.pricelistid = pl.pricelistid WHERE pl.scaleqty = pp.scale::double precision  ) foo GROUP BY foo.cmmf, foo.vendorcode, foo.plant ) ," &
                " pr as (SELECT pl.pricelistid, pl.cmmf, pl.scaleqty, pp.amount, pp.perunit, pl.validfrom, pl.validto, pl.vendorcode, pl.currency, pp.plant, pp.id  from my left join pricechangedtl pd on pd.pricechangehdid = my.pricechangehdid	left join  pricelist pl on pl.cmmf = pd.cmmf  LEFT JOIN priceplantscale pp ON pp.pricelistid = pl.pricelistid WHERE pl.scaleqty = pp.scale::double precision )," &
                " std as (select cmmf, max(validfrom) as validfrom from standardcostad group by cmmf)" &
-               " select distinct dt.*,c.commercialref,r.rangedesc,r.range,v.vendorname::character varying,v.shortname::character varying,materialdesc::character varying," &
+               " select distinct dt.*,c.commercialref,r.rangedesc,r.range,v.vendorname::character varying,v.shortname3::character varying as shortname,materialdesc::character varying," &
                " (getpriceplantinfo('',dt.cmmf,dt.vendorcode,dt.plant,dt.validon,dt.price,dt.pricingunit,ad.planprice1,ad.per)).* " &
                 " ,doc.getvendorcurr(dt.vendorcode,dt.validon) as crcy  " &
                "   from pricechangedtl dt  " &
@@ -197,8 +197,8 @@ Public Class FormMyTask3
         sb.Append("select ''::text as shortname" &
                   " union all" &
                   " (with vc as (select distinct vendorcode from pricechangedtl) " &
-                  " select distinct v.shortname from vc" &
-                  " left join vendor v on v.vendorcode = vc.vendorcode order by v.shortname);")
+                  " select distinct v.shortname3 as shortname from vc" &
+                  " left join vendor v on v.vendorcode = vc.vendorcode order by v.shortname3);")
         sb.Append("select Null::bigint as id,Null::text as specialproject,null::boolean as isactive union all(select id,specialproject,isactive from pricechangespecialproject where isactive order by lineno);")
         If DbAdapter1.TbgetDataSet(sb.ToString, DS, mymessage) Then
             Try
@@ -280,7 +280,7 @@ Public Class FormMyTask3
         sb.Append("with my as (select distinct pricechangehdid from sp_getmytasks('" & myuser & "'::text,false) as tb(pricechangehdid bigint,creator character varying,creatorname character varying,validator1 character varying,validator1name character varying,validator2 character varying,validator2name character varying,pricetype character varying,description text,submitdate date,negotiateddate date,attachment text,status integer,statusname text,actiondate date,actionby character varying,reasonid integer))" &
                  " , pl as (select cmmf, max(validfrom) as validfrom,vendorcode from pricelist  group by cmmf,vendorcode)" &
                  " , std as (select cmmf, max(validfrom) as validfrom from standardcostad group by cmmf)" &
-                 " select dt.*,c.commercialref,r.rangedesc,r.range,v.vendorname::character varying,v.shortname::character varying,materialdesc::character varying, pr.amount::numeric,pr.perunit::numeric,ad.planprice1,ad.per," &
+                 " select dt.*,c.commercialref,r.rangedesc,r.range,v.vendorname::character varying,v.shortname3::character varying as shortname,materialdesc::character varying, pr.amount::numeric,pr.perunit::numeric,ad.planprice1,ad.per," &
                  " (getdelta(dt.price,dt.pricingunit,ad.planprice1,ad.per)) as deltastd, " &
                  " (getdelta(dt.price,dt.pricingunit,pr.amount::numeric,pr.perunit::numeric) ) as deltasap," &
                   " getalert(dt.price,dt.pricingunit,pr.amount::numeric,pr.perunit::numeric,ad.planprice1,ad.per) as alert,pr.validfrom " &
@@ -313,7 +313,7 @@ Public Class FormMyTask3
         '          " left join pricelist pr on pr.cmmf = pl.cmmf and pr.validfrom = pl.validfrom and pr.vendorcode = v.vendorcode;")
         sb.Append("with my as (select distinct pricechangehdid,statusname from sp_getmytasks('" & myuser & "'::text,true) as tb(pricechangehdid bigint,creator character varying,creatorname character varying,validator1 character varying,validator1name character varying,validator2 character varying,validator2name character varying,pricetype character varying,description text,submitdate date,negotiateddate date,attachment text,status integer,statusname text,actiondate date,actionby character varying,reasonid integer))" &
                  " , std as (select cmmf, max(validfrom) as validfrom from standardcostad group by cmmf)" &
-                 " select dt.*,ad.planprice1,c.commercialref,r.rangedesc,r.range,v.vendorname::character varying,v.shortname::character varying,materialdesc::character varying, " &
+                 " select dt.*,ad.planprice1,c.commercialref,r.rangedesc,r.range,v.vendorname::character varying,v.shortname3::character varying as shortname,materialdesc::character varying, " &
                  " (getpriceinfo(my.statusname,dt.cmmf,dt.vendorcode,dt.validon,dt.price,dt.pricingunit,ad.planprice1,ad.per)).* " &
                  "   from pricechangedtl dt  " &
                  " left join cmmf c on c.cmmf = dt.cmmf  inner join my on my.pricechangehdid = dt.pricechangehdid left join vendor v on v.vendorcode = dt.vendorcode left join range r on r.rangeid = c.rangeid " &

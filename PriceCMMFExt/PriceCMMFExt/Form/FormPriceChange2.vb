@@ -294,7 +294,7 @@ Public Class FormPriceChange2
         '        " left join standardcostad ad on ad.cmmf = std.cmmf and ad.validfrom = std.validfrom where dt.pricechangehdid = {1};", myUser, myrowhd.Item("pricechangehdid")))
         sb.Append(String.Format("with my as (select distinct pricechangehdid,statusname from sp_getmytasks4('{0}'::text,true) as tb(pricechangehdid bigint,creator character varying,creatorname character varying,validator1 character varying,validator1name character varying,validator2 character varying,validator2name character varying,validator3 character varying,validator3name character varying,pricetype character varying,description text,submitdate date,negotiateddate date,attachment text,status integer,statusname text,actiondate date,actionby character varying,reasonid integer))" &
                 " , std as (select cmmf, max(validfrom) as validfrom from standardcostad group by cmmf)" &
-                " select dt.*,ad.planprice1,c.commercialref,r.rangedesc,r.range,v.vendorname::character varying,v.shortname::character varying,materialdesc::character varying, " &
+                " select dt.*,ad.planprice1,c.commercialref,r.rangedesc,r.range,v.vendorname::character varying,v.shortname3::character varying as shortname,materialdesc::character varying, " &
                 " (getpriceplantinfo(my.statusname,dt.cmmf,dt.vendorcode,dt.plant,dt.validon,dt.price,dt.pricingunit,ad.planprice1,ad.per)).* ,doc.getvendorcurr(dt.vendorcode,dt.validon) as crcy " &
                 "   from pricechangedtl dt  " &
                 " left join cmmf c on c.cmmf = dt.cmmf  inner join my on my.pricechangehdid = dt.pricechangehdid left join vendor v on v.vendorcode = dt.vendorcode left join range r on r.rangeid = c.rangeid " &
@@ -1114,7 +1114,7 @@ Public Class FormPriceChange2
                                 '         " where ps.cmmf = p.cmmf and ps.vendorcode = p.vendorcode and ps.plant = p.plant order by validfrom desc limit 1)" &
                                 '         " where creator = '" & creator & "'"
                                 sqlstr = "with std as (select cmmf, max(validfrom) as validfrom from standardcostad group by cmmf) " &
-                                         " select p.cmmf,c.commercialref,p.vendorcode,p.purchorg,p.plant,p.validon,p.price,p.pricingunit,p.comment,c.commercialref,v.vendorname::character varying,v.shortname::character varying,materialdesc::character varying,r.range,r.rangedesc,ad.planprice1, ad.per,pr.amount::numeric, pr.perunit::numeric," &
+                                         " select p.cmmf,c.commercialref,p.vendorcode,p.purchorg,p.plant,p.validon,p.price,p.pricingunit,p.comment,c.commercialref,v.vendorname::character varying,v.shortname3::character varying as shortname,materialdesc::character varying,r.range,r.rangedesc,ad.planprice1, ad.per,pr.amount::numeric, pr.perunit::numeric," &
                                         " (getpriceplantinfo('New',p.cmmf,p.vendorcode,p.plant,p.validon,p.price,p.pricingunit,ad.planprice1,ad.per)).*" &
                                         " ,pr.validfrom ,duplicate" &
                                          " from pricechangedtltemp p" &
@@ -1274,7 +1274,7 @@ Public Class FormPriceChange2
                                 '         " where creator = '" & creator & "'"
 
                                 sqlstr = "with std as (select cmmf, max(validfrom) as validfrom from standardcostad group by cmmf) " &
-                                         " select p.cmmf,c.commercialref,p.vendorcode,p.purchorg,p.plant,p.validon,p.price,p.pricingunit,p.comment,c.commercialref,v.vendorname::character varying,v.shortname::character varying,materialdesc::character varying,r.range,r.rangedesc,ad.planprice1, ad.per,pr.amount::numeric, pr.perunit::numeric," &
+                                         " select p.cmmf,c.commercialref,p.vendorcode,p.purchorg,p.plant,p.validon,p.price,p.pricingunit,p.comment,c.commercialref,v.vendorname::character varying,v.shortname3::character varying as shortname,materialdesc::character varying,r.range,r.rangedesc,ad.planprice1, ad.per,pr.amount::numeric, pr.perunit::numeric," &
                                          " (getdelta(p.price,p.pricingunit,ad.planprice1,ad.per)) as deltastd," &
                                          " (getdelta(p.price,p.pricingunit,pr.amount::numeric,pr.perunit::numeric) ) as deltasap," &
                                          " getalert(p.price,p.pricingunit,pr.amount::numeric,pr.perunit::numeric,ad.planprice1,ad.per) as alert,pr.validfrom " &
@@ -1398,7 +1398,7 @@ Public Class FormPriceChange2
         '         " left join pricelist pr on pr.cmmf = pl.cmmf and pr.validfrom = pl.validfrom" &
         '         " where(dt.pricechangehdid = " & priceChangeId & ")"
         sqlstr = "with std as (select cmmf, max(validfrom) as validfrom from standardcostad group by cmmf) " &
-                 " select dt.vendorcode,dt.cmmf as material,c.commercialref,dt.purchorg,dt.plant,dt.validon,dt.price as rate,dt.pricingunit,dt.comment,r.rangedesc,r.range,v.vendorname::character varying,v.shortname::character varying,materialdesc::character varying, pr.amount::numeric,pr.perunit::numeric, (getdelta(dt.price,dt.pricingunit,ad.planprice1,ad.per)) as deltastd,  (getdelta(dt.price,dt.pricingunit,pr.amount::numeric,pr.perunit::numeric) ) as deltasap, getalert(dt.price,dt.pricingunit,pr.amount::numeric,pr.perunit::numeric,ad.planprice1,ad.per) as alert,dt.sap" &
+                 " select dt.vendorcode,dt.cmmf as material,c.commercialref,dt.purchorg,dt.plant,dt.validon,dt.price as rate,dt.pricingunit,dt.comment,r.rangedesc,r.range,v.vendorname::character varying,v.shortname3::character varying as shortname,materialdesc::character varying, pr.amount::numeric,pr.perunit::numeric, (getdelta(dt.price,dt.pricingunit,ad.planprice1,ad.per)) as deltastd,  (getdelta(dt.price,dt.pricingunit,pr.amount::numeric,pr.perunit::numeric) ) as deltasap, getalert(dt.price,dt.pricingunit,pr.amount::numeric,pr.perunit::numeric,ad.planprice1,ad.per) as alert,dt.sap" &
                  " from pricechangedtl dt " &
                  " left join cmmf c on c.cmmf = dt.cmmf  " &
                  " left join vendor v on v.vendorcode = dt.vendorcode left join range r on r.rangeid = c.rangeid" &
